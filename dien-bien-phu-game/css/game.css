@@ -1,0 +1,541 @@
+/* Game CSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto Slab', serif;
+    background: linear-gradient(135deg, #1a472a 0%, #2d5a3d 100%);
+    color: #ffffff;
+    overflow: hidden;
+    height: 100vh;
+}
+
+.game-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+/* Header */
+.game-header {
+    background: rgba(0, 0, 0, 0.8);
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #ffd700;
+    position: relative;
+    z-index: 100;
+}
+
+.level-info h1 {
+    font-size: 1.5rem;
+    color: #ffd700;
+    margin-bottom: 5px;
+}
+
+.level-info p {
+    color: #a8d8a8;
+    font-size: 1rem;
+}
+
+.game-stats {
+    display: flex;
+    gap: 30px;
+}
+
+.stat {
+    text-align: center;
+}
+
+.stat .label {
+    display: block;
+    font-size: 0.9rem;
+    color: #a8d8a8;
+    margin-bottom: 2px;
+}
+
+.stat span:last-child {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.pause-btn {
+    background: #ffd700;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.pause-btn:hover {
+    background: #ffed4e;
+    transform: scale(1.1);
+}
+
+/* Game Area */
+.game-area {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    background:
+        radial-gradient(circle at 30% 20%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
+        linear-gradient(135deg, #1a472a 0%, #2d5a3d 100%);
+}
+
+#gameCanvas {
+    border: 3px solid #ffd700;
+    border-radius: 10px;
+    background: linear-gradient(to bottom,
+            #87CEEB 0%,
+            #87CEEB 60%,
+            #90EE90 60%,
+            #228B22 100%);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    cursor: none;
+    /* Ẩn cursor để chỉ hiển thị crosshair custom */
+}
+
+/* Overlay */
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 200;
+    transition: opacity 0.3s ease;
+}
+
+.overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.overlay-content {
+    background: linear-gradient(135deg, #2d5a3d, #1a472a);
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    border: 3px solid #ffd700;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+    max-width: 400px;
+}
+
+.overlay-content h2 {
+    color: #ffd700;
+    font-size: 2rem;
+    margin-bottom: 15px;
+}
+
+.overlay-content p {
+    color: #e8f5e8;
+    font-size: 1.1rem;
+    margin-bottom: 25px;
+    line-height: 1.5;
+}
+
+.overlay-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.overlay-buttons button {
+    background: linear-gradient(45deg, #ff6b35, #f7931e);
+    color: white;
+    border: none;
+    padding: 15px 25px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.overlay-buttons button:hover {
+    background: linear-gradient(45deg, #f7931e, #ff6b35);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 107, 53, 0.4);
+}
+
+.overlay-buttons button:nth-child(2) {
+    background: linear-gradient(45deg, #4caf50, #45a049);
+}
+
+.overlay-buttons button:nth-child(2):hover {
+    background: linear-gradient(45deg, #45a049, #4caf50);
+}
+
+.overlay-buttons button:nth-child(3) {
+    background: linear-gradient(45deg, #757575, #616161);
+}
+
+.overlay-buttons button:nth-child(3):hover {
+    background: linear-gradient(45deg, #616161, #757575);
+}
+
+/* History Panel */
+.history-panel {
+    position: fixed;
+    right: -350px;
+    top: 80px;
+    bottom: 20px;
+    width: 350px;
+    background: rgba(0, 0, 0, 0.9);
+    border: 2px solid #ffd700;
+    border-radius: 15px 0 0 15px;
+    transition: right 0.4s ease;
+    z-index: 150;
+    overflow-y: auto;
+}
+
+.history-panel.open {
+    right: 0;
+}
+
+.toggle-history {
+    position: absolute;
+    left: -60px;
+    top: 20px;
+    background: #ffd700;
+    color: #1a472a;
+    border: none;
+    padding: 15px 10px;
+    border-radius: 10px 0 0 10px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 0.9rem;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    transition: all 0.3s ease;
+}
+
+.toggle-history:hover {
+    background: #ffed4e;
+    transform: translateX(-5px);
+}
+
+.history-content {
+    padding: 20px;
+    height: 100%;
+    overflow-y: auto;
+}
+
+.history-content h3 {
+    color: #ffd700;
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #ffd700;
+    padding-bottom: 5px;
+}
+
+.history-content p {
+    color: #e8f5e8;
+    line-height: 1.6;
+    margin-bottom: 15px;
+    text-align: justify;
+}
+
+.historical-quote {
+    background: rgba(255, 215, 0, 0.1);
+    border-left: 4px solid #ffd700;
+    margin: 20px 0;
+    padding: 15px;
+    border-radius: 0 10px 10px 0;
+}
+
+.historical-quote blockquote {
+    font-style: italic;
+    color: #ffed4e;
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+.difficulty-indicator {
+    background: rgba(255, 215, 0, 0.2);
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+    border-left: 3px solid #ffd700;
+}
+
+.difficulty-indicator strong {
+    color: #ffd700;
+}
+
+/* Controls Info */
+.controls-info {
+    background: rgba(0, 0, 0, 0.7);
+    padding: 10px 20px;
+    text-align: center;
+    border-top: 1px solid rgba(255, 215, 0, 0.3);
+}
+
+.controls-info h4 {
+    color: #ffd700;
+    margin-bottom: 5px;
+}
+
+.controls-info p {
+    color: #a8d8a8;
+    font-size: 0.9rem;
+}
+
+/* Animations và hiệu ứng */
+@keyframes explosionEffect {
+    0% {
+        transform: scale(0);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(1.2);
+        opacity: 0.8;
+    }
+
+    100% {
+        transform: scale(2);
+        opacity: 0;
+    }
+}
+
+@keyframes powerUpGlow {
+
+    0%,
+    100% {
+        box-shadow: 0 0 5px #ffd700;
+    }
+
+    50% {
+        box-shadow: 0 0 20px #ffd700, 0 0 30px #ffd700;
+    }
+}
+
+@keyframes levelComplete {
+    0% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Achievement notifications */
+.achievement {
+    position: fixed;
+    top: 100px;
+    right: 20px;
+    background: linear-gradient(45deg, #ffd700, #ffed4e);
+    color: #1a472a;
+    padding: 15px 20px;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(255, 215, 0, 0.4);
+    z-index: 300;
+    animation: slideInRight 0.5s ease, fadeOut 0.5s ease 2.5s forwards;
+    font-weight: bold;
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    to {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+}
+
+/* Health bar for enemies */
+.health-bar {
+    position: absolute;
+    width: 30px;
+    height: 4px;
+    background: rgba(255, 0, 0, 0.7);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.health-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #ff0000, #ffff00, #00ff00);
+    transition: width 0.2s ease;
+}
+
+/* Power-up indicators */
+.power-up-indicator {
+    position: fixed;
+    bottom: 100px;
+    left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 100;
+}
+
+.power-up-item {
+    background: rgba(0, 0, 0, 0.7);
+    padding: 10px 15px;
+    border-radius: 25px;
+    border: 2px solid #ffd700;
+    color: #ffd700;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 120px;
+    animation: powerUpGlow 2s infinite;
+}
+
+.power-up-timer {
+    background: rgba(255, 215, 0, 0.2);
+    height: 4px;
+    border-radius: 2px;
+    margin-top: 5px;
+    overflow: hidden;
+}
+
+.power-up-timer-fill {
+    height: 100%;
+    background: #ffd700;
+    transition: width 0.1s linear;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .game-header {
+        flex-direction: column;
+        gap: 10px;
+        padding: 10px;
+    }
+
+    .game-stats {
+        gap: 15px;
+    }
+
+    #gameCanvas {
+        width: 100%;
+        max-width: 700px;
+        height: auto;
+    }
+
+    .history-panel {
+        width: 100%;
+        right: -100%;
+        top: 0;
+        bottom: 0;
+        border-radius: 0;
+    }
+
+    .toggle-history {
+        left: -50px;
+        writing-mode: horizontal-tb;
+        padding: 10px 15px;
+    }
+}
+
+@media (max-width: 768px) {
+    .game-stats {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .stat {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .stat .label {
+        margin-bottom: 0;
+    }
+
+    .overlay-content {
+        margin: 20px;
+        padding: 30px 20px;
+    }
+
+    .power-up-indicator {
+        bottom: 120px;
+        left: 10px;
+        right: 10px;
+        flex-direction: row;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+}
+
+/* Loading screen */
+.loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, #1a472a 0%, #2d5a3d 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    transition: opacity 0.5s ease;
+}
+
+.loading-screen h2 {
+    color: #ffd700;
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.loading-bar {
+    width: 300px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    overflow: hidden;
+    border: 2px solid #ffd700;
+}
+
+.loading-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #ffd700, #ffed4e);
+    width: 0%;
+    transition: width 0.3s ease;
+    border-radius: 8px;
+}
+
+.loading-screen.hidden {
+    opacity: 0;
+    pointer-events: none;
+}

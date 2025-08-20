@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Điện Biên Phủ - Màn Chơi</title>
+    <link rel="stylesheet" href="css/game.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="game-container">
+        <!-- Header với thông tin level -->
+        <header class="game-header">
+            <div class="level-info">
+                <h1 id="levelTitle">Ngày 1: Mở màn chiến dịch</h1>
+                <p id="levelDate">13/3/1954</p>
+            </div>
+            <div class="game-stats">
+                <div class="stat">
+                    <span class="label">Điểm:</span>
+                    <span id="score">0</span>
+                </div>
+                <div class="stat">
+                    <span class="label">Mạng:</span>
+                    <span id="lives">3</span>
+                </div>
+                <div class="stat">
+                    <span class="label">Mục tiêu:</span>
+                    <span id="objective">Tiêu diệt 10 máy bay</span>
+                </div>
+            </div>
+            <button class="pause-btn" onclick="togglePause()">⏸️</button>
+        </header>
+
+        <!-- Khung game chính -->
+        <div class="game-area">
+            <canvas id="gameCanvas" width="800" height="600"></canvas>
+
+            <!-- Overlay cho pause/game over -->
+            <div id="gameOverlay" class="overlay hidden">
+                <div class="overlay-content">
+                    <h2 id="overlayTitle">Game Paused</h2>
+                    <p id="overlayMessage">Nhấn tiếp tục để chơi</p>
+                    <div class="overlay-buttons">
+                        <button id="continueBtn" onclick="resumeGame()">Tiếp tục</button>
+                        <button id="restartBtn" onclick="restartLevel()">Chơi lại</button>
+                        <button id="homeBtn" onclick="goHome()">Về trang chủ</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Panel thông tin lịch sử -->
+        <div class="history-panel" id="historyPanel">
+            <button class="toggle-history" onclick="toggleHistory()">
+                📚 Thông tin lịch sử
+            </button>
+            <div class="history-content">
+                <h3>Bối cảnh lịch sử</h3>
+                <div id="historicalContext">
+                    <!-- Nội dung lịch sử sẽ được load bằng JavaScript -->
+                </div>
+                <h3>Ý nghĩa</h3>
+                <div id="historicalSignificance">
+                    <!-- Ý nghĩa lịch sử -->
+                </div>
+                <div class="historical-quote">
+                    <blockquote id="historicalQuote">
+                        "Tiếng pháo đầu tiên đã báo hiệu cho một chiến thắng vĩ đại!"
+                    </blockquote>
+                </div>
+            </div>
+        </div>
+
+        <!-- Controls info -->
+        <div class="controls-info">
+            <h4>Điều khiển:</h4>
+            <p>🖱️ Di chuyển chuột để nhắm | Click để bắn | SPACE để pause</p>
+        </div>
+    </div>
+
+    <!-- Audio elements -->
+    <audio id="gameMusic" loop>
+        <source src="assets/audio/game_music.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="shootSound">
+        <source src="assets/audio/shoot.wav" type="audio/wav">
+    </audio>
+    <audio id="explosionSound">
+        <source src="assets/audio/explosion.wav" type="audio/wav">
+    </audio>
+    <audio id="powerUpSound">
+        <source src="assets/audio/powerup.wav" type="audio/wav">
+    </audio>
+    <audio id="victorySound">
+        <source src="assets/audio/victory.wav" type="audio/wav">
+    </audio>
+
+    <script src="js/data.js"></script>
+    <script src="js/game-engine.js"></script>
+    <script src="js/game.js"></script>
+</body>
+
+</html>

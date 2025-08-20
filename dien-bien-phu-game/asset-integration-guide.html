@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hướng Dẫn Tích Hợp Assets - Điện Biên Phủ Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            border-bottom: 3px solid #e74c3c;
+            padding-bottom: 10px;
+        }
+
+        .asset-section {
+            margin: 30px 0;
+            padding: 20px;
+            border: 2px dashed #bdc3c7;
+            border-radius: 8px;
+        }
+
+        .asset-section h2 {
+            color: #e74c3c;
+            margin-top: 0;
+        }
+
+        .file-info {
+            background: #ecf0f1;
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 4px solid #3498db;
+        }
+
+        .preview-area {
+            min-height: 150px;
+            background: #f8f9fa;
+            border: 2px dashed #dee2e6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6c757d;
+            margin: 15px 0;
+        }
+
+        .instructions {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .current-assets {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+
+        .asset-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            width: 200px;
+            text-align: center;
+        }
+
+        .file-drop {
+            border: 2px dashed #007bff;
+            border-radius: 8px;
+            padding: 40px;
+            text-align: center;
+            margin: 15px 0;
+            background: #f8f9ff;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .file-drop:hover {
+            background: #e7f1ff;
+            border-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🎮 Hướng Dẫn Tích Hợp Assets Tùy Chỉnh</h1>
+        <p><strong>Chúc mừng!</strong> Game engine đã được cập nhật để hỗ trợ assets tùy chỉnh của bạn. Làm theo hướng
+            dẫn dưới đây để thay thế các hình ảnh mặc định.</p>
+
+        <div class="asset-section">
+            <h2>📂 1. Background Image (Hình nền)</h2>
+            <div class="file-info">
+                <strong>File cần tạo:</strong> <code>assets/images/background.png</code><br>
+                <strong>Kích thước khuyến nghị:</strong> 800x600 pixels<br>
+                <strong>Mô tả:</strong> Hình nền chiến trường Điện Biên Phủ
+            </div>
+            <div class="instructions">
+                <strong>Cách sử dụng:</strong> Lưu hình nền pixel art của bạn (cảnh hoàng hôn/chiến trường) vào thư mục
+                <code>assets/images/</code> với tên <code>background.png</code>
+            </div>
+            <div class="preview-area">
+                Hình nền tùy chỉnh sẽ hiển thị ở đây
+            </div>
+        </div>
+
+        <div class="asset-section">
+            <h2>✈️ 2. Aircraft Sprite (Hình máy bay)</h2>
+            <div class="file-info">
+                <strong>File cần tạo:</strong> <code>assets/images/aircraft.png</code><br>
+                <strong>Kích thước khuyến nghị:</strong> 120x36 pixels (hoặc 160x48)<br>
+                <strong>Kích thước game gốc:</strong> 80x30 pixels<br>
+                <strong>Scaling tự động:</strong> 1.5× rộng, 1.2× cao để tránh bị méo<br>
+                <strong>Mô tả:</strong> Sprite máy bay địch với tỷ lệ tự nhiên hơn
+            </div>
+            <div class="instructions">
+                <strong>⚠️ Quan trọng:</strong> Thiết kế máy bay với tỷ lệ tự nhiên. Game sẽ tự động scale để phù hợp
+                với hitbox.<br>
+                <strong>Hướng:</strong> Máy bay hướng về bên phải trong file PNG.<br>
+                <strong>Lưu ý:</strong> Game tự động lật hình theo hướng bay.
+            </div>
+            <div class="preview-area">
+                Sprite máy bay tùy chỉnh với tỷ lệ đẹp hơn
+            </div>
+        </div>
+
+        <div class="asset-section">
+            <h2>🔫 3. Gun Body (Thân pháo)</h2>
+            <div class="file-info">
+                <strong>File cần tạo:</strong> <code>assets/images/gun-body.png</code><br>
+                <strong>Kích thước khuyến nghị:</strong> Kích thước tự nhiên (không cố định)<br>
+                <strong>Scaling tự động:</strong> 2.0x (gấp đôi kích thước gốc)<br>
+                <strong>Anchor point:</strong> Trung tâm sprite (pivot rotation)<br>
+                <strong>Mô tả:</strong> Thân pháo phòng không được scale tương đối
+            </div>
+            <div class="instructions">
+                <strong>Cải tiến:</strong> Scale theo tỷ lệ tự nhiên thay vì hardcode kích thước.<br>
+                <strong>Vị trí:</strong> Được vẽ ở trung tâm player với pivot point chính xác.<br>
+                <strong>Rotation:</strong> Anchor point luôn khớp với rotation axis.
+            </div>
+            <div class="preview-area">
+                Thân pháo tùy chỉnh với scaling tương đối 2.0x
+            </div>
+        </div>
+
+        <div class="asset-section">
+            <h2>🎯 4. Gun Barrel (Nòng pháo)</h2>
+            <div class="file-info">
+                <strong>File cần tạo:</strong> <code>assets/images/gun-barrel.png</code><br>
+                <strong>Kích thước khuyến nghị:</strong> Kích thước tự nhiên (không cố định)<br>
+                <strong>Scaling tự động:</strong> 1.5x (tăng 50% kích thước gốc)<br>
+                <strong>Anchor point:</strong> Base của barrel (gần pivot)<br>
+                <strong>Mô tả:</strong> Nòng pháo với scaling tương đối
+            </div>
+            <div class="instructions">
+                <strong>Cải tiến:</strong> Scale theo tỷ lệ thay vì hardcode dimensions.<br>
+                <strong>Thiết kế:</strong> Nòng pháo nằm ngang hướng phải trong file PNG.<br>
+                <strong>Rotation:</strong> Pivot tại base (-5 offset) để rotation tự nhiên.
+            </div>
+            <div class="preview-area">
+                Nòng pháo tùy chỉnh với scaling tương đối 1.5x
+            </div>
+        </div>
+
+        <div class="asset-section">
+            <h2>📋 Hướng Dẫn Chi Tiết</h2>
+            <div class="instructions">
+                <h3>Bước 1: Tạo thư mục</h3>
+                <p>Đảm bảo thư mục <code>assets/images/</code> đã tồn tại trong game folder.</p>
+
+                <h3>Bước 2: Thêm hình ảnh</h3>
+                <p>Copy các file PNG của bạn vào thư mục với đúng tên:</p>
+                <ul>
+                    <li><code>background.png</code> - Hình nền</li>
+                    <li><code>aircraft.png</code> - Máy bay</li>
+                    <li><code>gun-body.png</code> - Thân pháo</li>
+                    <li><code>gun-barrel.png</code> - Nòng pháo</li>
+                </ul>
+
+                <h3>Bước 3: Test game</h3>
+                <p>Refresh trang game để xem assets mới. Nếu không load được, game sẽ dùng hình vẽ mặc định.</p>
+
+                <h3>Lưu ý kỹ thuật:</h3>
+                <ul>
+                    <li>Sử dụng định dạng PNG để có nền trong suốt</li>
+                    <li>Kích thước có thể điều chỉnh - game scale tương đối</li>
+                    <li>Pivot points được tính toán tự động</li>
+                    <li>Game sẽ fallback về graphics cũ nếu không tìm thấy file</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="asset-section">
+            <h2>⚙️ Scaling System Mới</h2>
+            <div class="instructions">
+                <strong>Cải tiến quan trọng:</strong> Hệ thống scaling đã được thiết kế lại để đảm bảo pivot points
+                chính xác:<br><br>
+
+                <strong>🎯 Gun Body Scaling:</strong><br>
+                • Scale factor: 2.0x (gấp đôi kích thước tự nhiên)<br>
+                • Anchor point: Trung tâm sprite<br>
+                • Rotation: Quanh center của player<br><br>
+
+                <strong>🎯 Gun Barrel Scaling:</strong><br>
+                • Scale factor: 1.5x (tăng 50%)<br>
+                • Anchor point: Base của barrel (offset -5px)<br>
+                • Rotation: Quanh pivot chính xác<br><br>
+
+                <strong>🔧 Muzzle Flash:</strong><br>
+                • Tự động tính toán vị trí dựa trên barrel length thực tế<br>
+                • Khớp với kích thước barrel đã scale<br>
+            </div>
+        </div>
+
+        <div class="asset-section">
+            <h2>🎨 Các Tính Năng Đã Thêm</h2>
+            <ul>
+                <li>✅ Hệ thống load ảnh bất đồng bộ</li>
+                <li>✅ Fallback tự động nếu ảnh không load được</li>
+                <li>✅ Scaling tương đối thay vì hardcode dimensions</li>
+                <li>✅ Pivot points chính xác cho rotation mượt mà</li>
+                <li>✅ Tự động flip máy bay theo hướng bay</li>
+                <li>✅ Giữ nguyên hiệu ứng muzzle flash và particles</li>
+                <li>✅ Tương thích với hệ thống xoay nòng pháo</li>
+                <li>✅ Console log để debug việc load ảnh</li>
+            </ul>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px; padding: 20px; background: #e8f5e8; border-radius: 8px;">
+            <strong>🚀 Ready to upgrade your game graphics!</strong><br>
+            <small>Hệ thống scaling mới đảm bảo graphics luôn khớp với rotation mechanics</small>
+        </div>
+    </div>
+</body>
+
+</html>
