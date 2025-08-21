@@ -1,0 +1,4 @@
+<!-- Placeholder for gun-barrel.png -->
+<!-- Replace this file with your custom gun barrel image -->
+<!-- Recommended size: 40x12 pixels -->
+<!-- Design barrel pointing horizontally right, game will rotate it automatically -->

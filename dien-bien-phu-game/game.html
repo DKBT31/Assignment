@@ -3,15 +3,23 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Game Điện Biên Phủ - Màn Chơi</title>
     <link rel="stylesheet" href="css/game.css">
+    <script src="js/audio.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
+    <!-- Audio elements -->
+    <audio id="bombfallSound" src="assets/audio/bombfall.ogg"></audio>
+    <audio id="bullethitSound" src="assets/audio/bullethit.ogg"></audio>
+    <audio id="enemyfireSound" src="assets/audio/enemyfire.ogg"></audio>
+    <audio id="staticshotSound" src="assets/audio/staticshot.ogg"></audio>
+    <audio id="tankfireSound" src="assets/audio/tankfire4.ogg"></audio>
+
     <div class="game-container">
         <!-- Header với thông tin level -->
         <header class="game-header">
@@ -38,7 +46,7 @@
 
         <!-- Khung game chính -->
         <div class="game-area">
-            <canvas id="gameCanvas" width="800" height="600"></canvas>
+            <canvas id="gameCanvas"></canvas>
 
             <!-- Overlay cho pause/game over -->
             <div id="gameOverlay" class="overlay hidden">
@@ -85,19 +93,19 @@
 
     <!-- Audio elements -->
     <audio id="gameMusic" loop>
-        <source src="assets/audio/game_music.mp3" type="audio/mpeg">
+        <source src="assets/audio/staticshot.ogg" type="audio/ogg">
     </audio>
     <audio id="shootSound">
-        <source src="assets/audio/shoot.wav" type="audio/wav">
+        <source src="assets/audio/tankfire4.ogg" type="audio/ogg">
     </audio>
     <audio id="explosionSound">
-        <source src="assets/audio/explosion.wav" type="audio/wav">
+        <source src="assets/audio/bombfall.ogg" type="audio/ogg">
     </audio>
     <audio id="powerUpSound">
-        <source src="assets/audio/powerup.wav" type="audio/wav">
+        <source src="assets/audio/enemyfire.ogg" type="audio/ogg">
     </audio>
     <audio id="victorySound">
-        <source src="assets/audio/victory.wav" type="audio/wav">
+        <source src="assets/audio/bullethit.ogg" type="audio/ogg">
     </audio>
 
     <script src="js/data.js"></script>

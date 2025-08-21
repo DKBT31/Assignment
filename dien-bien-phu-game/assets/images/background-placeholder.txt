@@ -1,0 +1,3 @@
+<!-- Placeholder for background.png -->
+<!-- Replace this file with your custom background image -->
+<!-- Recommended size: 1400x800 pixels -->
