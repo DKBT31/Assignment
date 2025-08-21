@@ -39,6 +39,13 @@ class GameEngine {
             multiShot: false,
             spreadShot: false
         };
+
+        // Audio management
+        this.audio = {
+            explosionPlaying: false,
+            lastExplosionTime: 0,
+            minExplosionInterval: 500 // Minimum time between explosion sounds (milliseconds)
+        };
         this.powerUpTimers = {};
 
         // Hệ thống phòng thủ chung
@@ -605,24 +612,30 @@ class GameEngine {
     }
 
     updateBombs(deltaTime) {
-        this.bombs.forEach((bomb, index) => {
+        for (let i = this.bombs.length - 1; i >= 0; i--) {
+            const bomb = this.bombs[i];
             bomb.x += bomb.vx;
             bomb.y += bomb.vy;
             bomb.vy += bomb.gravity || 0.2; // Use bomb's gravity or default
 
             // Check if bomb hits ground
             if (bomb.y >= this.height - 12) {
-                // Damage defense when bomb hits ground
-                this.defenseHealth -= bomb.damage || 25;
-                this.createExplosion(bomb.x, this.height - 12);
-                this.bombs.splice(index, 1);
+                // Only process bomb impact if game is active
+                if (this.isRunning && !this.isPaused) {
+                    // Damage defense when bomb hits ground
+                    this.defenseHealth -= bomb.damage || 25;
+                    
+                    // Create explosion and play explosion sound
+                    this.createExplosion(bomb.x, this.height - 12, true); // true indicates ground impact
+                }
+                this.bombs.splice(i, 1);
 
                 // Check if defense is destroyed
                 if (this.defenseHealth <= 0) {
                     this.defenseHealth = 0;
                 }
             }
-        });
+        }
     }
 
     updateEnemies(deltaTime) {
@@ -810,6 +823,17 @@ class GameEngine {
             bombVy = 2; // Normal downward velocity
         }
 
+        // Phát âm thanh bom rơi
+        const bombfallSound = document.getElementById('bombfallSound');
+        if (bombfallSound) {
+            bombfallSound.currentTime = 0;
+            bombfallSound.play().catch(e => console.log('Cannot play bombfall sound:', e));
+        }
+
+        // Tính thời gian bom sẽ rơi đến đất
+        const distanceToGround = this.height - (enemy.y + enemy.height);
+        const timeToGround = Math.sqrt((2 * distanceToGround) / 0.15); // Công thức vật lý: t = sqrt(2h/g)
+        
         this.bombs.push({
             x: enemy.x + enemy.width / 2,
             y: enemy.y + enemy.height,
@@ -818,7 +842,9 @@ class GameEngine {
             width: 9,
             height: 18,
             damage: enemy.bombDamage || 25,
-            gravity: 0.15 // Gravity acceleration for realistic physics
+            gravity: 0.15, // Gravity acceleration for realistic physics
+            dropTime: Date.now(), // Thêm thời điểm thả bom
+            expectedImpactTime: Date.now() + (timeToGround * 16.67) // Chuyển đổi từ frame sang milliseconds (60fps = 16.67ms/frame)
         });
     }
 
@@ -934,27 +960,35 @@ class GameEngine {
                         }
 
                         this.enemies.splice(enemyIndex, 1);
-                        this.playSound('explosion');
+                        // Don't play explosion sound for enemy destruction
                     }
                 }
             });
         });
 
         // Bomb vs Player collision - also damage unified defense
-        this.bombs.forEach((bomb, bombIndex) => {
+        for (let i = this.bombs.length - 1; i >= 0; i--) {
+            const bomb = this.bombs[i];
             if (this.checkCollision(bomb, this.player)) {
                 // Apply shield power-up to reduce damage
                 const damage = this.activePowerUps.shield ? (bomb.damage || 25) * 0.5 : (bomb.damage || 25);
                 this.defenseHealth -= damage;
-                this.createExplosion(bomb.x, bomb.y);
-                this.bombs.splice(bombIndex, 1);
+                
+                // Xử lý nổ khi bom chạm người chơi (không phát âm thanh)
+                this.createExplosion(bomb.x, bomb.y, false);
+                
+                // Xóa bom
+                this.bombs.splice(i, 1);
 
                 if (this.defenseHealth <= 0) {
                     this.defenseHealth = 0;
                     this.playerHit();
                 }
+                
+                // Chỉ xử lý một vụ nổ tại một thời điểm
+                break;
             }
-        });
+        };
     }
 
     checkCollision(rect1, rect2) {
@@ -964,7 +998,12 @@ class GameEngine {
             rect1.y + rect1.height > rect2.y;
     }
 
-    createExplosion(x, y) {
+    createExplosion(x, y, isGroundImpact = false) {
+        // Only create explosion effects when game is running and not paused
+        if (!this.isRunning || this.isPaused) {
+            return;
+        }
+
         this.explosions.push({
             x: x,
             y: y,
@@ -972,6 +1011,21 @@ class GameEngine {
             life: 800,
             maxLife: 800
         });
+
+        // Only play explosion sound for ground impacts and when game is active
+        if (isGroundImpact && this.isRunning && !this.isPaused) {
+            const staticshotSound = document.getElementById('staticshotSound');
+            if (staticshotSound) {
+                // Ensure previous playing is stopped
+                staticshotSound.pause();
+                staticshotSound.currentTime = 0;
+                
+                // Play new explosion sound
+                if (this.audioEnabled) {
+                    staticshotSound.play().catch(e => console.log('Cannot play staticshot sound:', e));
+                }
+            }
+        }
 
         // Create explosion particles
         for (let i = 0; i < 15; i++) {

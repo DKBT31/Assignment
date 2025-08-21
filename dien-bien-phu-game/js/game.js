@@ -94,6 +94,19 @@ function setupGameControls() {
 
 // Setup audio
 function setupAudio() {
+    // Khởi tạo các đối tượng âm thanh
+    window.gameAudio = {
+        bombfall: document.getElementById('bombfallSound'),
+        bullethit: document.getElementById('bullethitSound'),
+        enemyfire: document.getElementById('enemyfireSound'),
+        staticshot: document.getElementById('staticshotSound'),
+        tankfire: document.getElementById('tankfireSound')
+    };
+
+    // Thiết lập volume cho từng loại âm thanh
+    Object.values(window.gameAudio).forEach(audio => {
+        audio.volume = 0.3; // Có thể điều chỉnh volume tùy ý
+    });
     const gameMusic = document.getElementById('gameMusic');
 
     // Auto-play music when user interacts with the page
