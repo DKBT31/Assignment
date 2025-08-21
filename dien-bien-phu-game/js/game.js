@@ -148,20 +148,41 @@ function goHome() {
 
 // Go to next level
 function nextLevel() {
-    if (!game) return;
+    console.log('nextLevel() called, current level:', currentLevel);
+    
+    if (!game) {
+        console.error('Game object not found!');
+        return;
+    }
 
     if (currentLevel < 12) {
         currentLevel++;
+        console.log('Moving to level:', currentLevel);
+        
+        // Update the URL to reflect the new level
+        const newUrl = `game.html?level=${currentLevel}`;
+        window.history.pushState({level: currentLevel}, '', newUrl);
+        
+        // Load the new level
         game.loadLevel(currentLevel);
+        game.reset(); // Reset game state
         game.start();
         hideOverlay();
 
         // Reset nút "Tiếp tục" về trạng thái bình thường
         const continueBtn = document.getElementById('continueBtn');
-        continueBtn.textContent = 'Tiếp tục';
-        continueBtn.onclick = () => resumeGame();
+        if (continueBtn) {
+            continueBtn.textContent = 'Tiếp tục';
+            continueBtn.onclick = () => resumeGame();
+        }
+        
+        // Update level display
+        updateLevelDisplay();
+        
     } else {
-        goHome();
+        // All levels completed
+        console.log('All levels completed!');
+        showCompletionMessage();
     }
 }
 
@@ -188,17 +209,20 @@ function toggleHistory() {
     panel.classList.toggle('open');
 }
 
-// Navigation functions
-function nextLevel() {
-    if (currentLevel < 12) {
-        currentLevel++;
-        window.location.href = `game.html?level=${currentLevel}`;
-    } else {
-        // All levels completed
-        showCompletionMessage();
+// Update level display
+function updateLevelDisplay() {
+    const levelElement = document.getElementById('currentLevel');
+    if (levelElement) {
+        levelElement.textContent = currentLevel;
+    }
+    
+    const titleElement = document.getElementById('levelTitle');
+    if (titleElement && historicalData[currentLevel - 1]) {
+        titleElement.textContent = historicalData[currentLevel - 1].title;
     }
 }
 
+// Navigation functions
 function previousLevel() {
     if (currentLevel > 1) {
         currentLevel--;
@@ -214,10 +238,10 @@ function showCompletionMessage() {
 
     title.textContent = '🏆 Chúc mừng!';
     message.innerHTML = `
-        <h3>Bạn đã hoàn thành tất cả 12 ngày lịch sử!</h3>
-        <p>Chiến thắng Điện Biên Phủ đã hoàn thành trong tay bạn.</p>
+        <h3>Bạn đã hoàn thành tất cả 12 ngày đêm lịch sử!</h3>
+        <p>Chiến thắng "Điện Biên Phủ trên không" đã hoàn thành trong tay bạn.</p>
         <p>Điểm tổng: ${gameState.totalScore}</p>
-        <p>"Điện Biên Phủ - Lừng lẫy năm châu, chấn động địa cầu!"</p>
+        <p>"Hà Nội - Điện Biên Phủ trên không" - 12 ngày đêm anh hùng!</p>
     `;
 
     buttons.innerHTML = `
@@ -230,7 +254,10 @@ function showCompletionMessage() {
 
     // Play victory fanfare
     setTimeout(() => {
-        document.getElementById('victorySound').play().catch(e => { });
+        const victorySound = document.getElementById('victorySound');
+        if (victorySound) {
+            victorySound.play().catch(e => { });
+        }
     }, 500);
 }
 

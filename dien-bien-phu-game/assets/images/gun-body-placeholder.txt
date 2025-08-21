@@ -1,0 +1,4 @@
+<!-- Placeholder for gun-body.png -->
+<!-- Replace this file with your custom gun body image -->
+<!-- Recommended size: 60x40 pixels -->
+<!-- This is the static base/platform part of the anti-aircraft gun -->

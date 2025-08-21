@@ -11,6 +11,13 @@ body {
     color: #ffffff;
     overflow: hidden;
     height: 100vh;
+    /* Prevent zoom on double tap */
+    touch-action: manipulation;
+    /* Prevent text selection on touch devices */
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .game-container {
@@ -102,7 +109,19 @@ body {
             #228B22 100%);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     cursor: none;
-    /* Ẩn cursor để chỉ hiển thị crosshair custom */
+    /* Canvas will be sized via JavaScript for responsiveness */
+    max-width: 100%;
+    max-height: calc(100vh - 120px);
+    display: block;
+    margin: 0 auto;
+    /* Touch handling */
+    touch-action: none;
+    /* Prevent context menu on long press */
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 /* Overlay */
@@ -433,6 +452,31 @@ body {
 }
 
 /* Responsive Design */
+@media (max-width: 1600px) {
+    #gameCanvas {
+        border-width: 2px;
+    }
+}
+
+@media (max-width: 1200px) {
+    .game-header {
+        padding: 12px 15px;
+    }
+
+    .level-info h1 {
+        font-size: 1.3rem;
+    }
+
+    .game-stats {
+        gap: 20px;
+    }
+
+    #gameCanvas {
+        border-width: 2px;
+        border-radius: 8px;
+    }
+}
+
 @media (max-width: 1024px) {
     .game-header {
         flex-direction: column;
@@ -440,14 +484,19 @@ body {
         padding: 10px;
     }
 
+    .level-info h1 {
+        font-size: 1.2rem;
+    }
+
     .game-stats {
         gap: 15px;
+        flex-wrap: wrap;
+        justify-content: center;
     }
 
     #gameCanvas {
-        width: 100%;
-        max-width: 700px;
-        height: auto;
+        border-width: 2px;
+        margin: 5px;
     }
 
     .history-panel {
@@ -466,19 +515,43 @@ body {
 }
 
 @media (max-width: 768px) {
+    body {
+        overflow-x: hidden;
+    }
+
+    .game-header {
+        padding: 8px;
+    }
+
+    .level-info h1 {
+        font-size: 1.1rem;
+    }
+
+    .level-info p {
+        font-size: 0.9rem;
+    }
+
     .game-stats {
         flex-direction: column;
         gap: 5px;
+        align-items: center;
     }
 
     .stat {
         display: flex;
         align-items: center;
         gap: 10px;
+        font-size: 0.9rem;
     }
 
     .stat .label {
         margin-bottom: 0;
+    }
+
+    #gameCanvas {
+        border-width: 1px;
+        border-radius: 5px;
+        margin: 2px;
     }
 
     .overlay-content {
@@ -493,6 +566,65 @@ body {
         flex-direction: row;
         justify-content: center;
         flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 480px) {
+    .game-header {
+        padding: 5px;
+    }
+
+    .level-info h1 {
+        font-size: 1rem;
+    }
+
+    .level-info p {
+        font-size: 0.8rem;
+    }
+
+    .game-stats {
+        font-size: 0.8rem;
+    }
+
+    .stat {
+        gap: 5px;
+    }
+
+    #gameCanvas {
+        margin: 1px;
+    }
+
+    .overlay-content {
+        margin: 10px;
+        padding: 20px 15px;
+    }
+
+    .overlay-content h2 {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-height: 600px) {
+    .game-header {
+        padding: 5px 10px;
+    }
+
+    .level-info h1 {
+        font-size: 1rem;
+        margin-bottom: 2px;
+    }
+
+    .level-info p {
+        font-size: 0.8rem;
+    }
+
+    .game-stats {
+        font-size: 0.8rem;
+        gap: 10px;
+    }
+
+    #gameCanvas {
+        max-height: calc(100vh - 60px);
     }
 }
 
