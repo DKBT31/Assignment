@@ -149,7 +149,7 @@ function goHome() {
 // Go to next level
 function nextLevel() {
     console.log('nextLevel() called, current level:', currentLevel);
-    
+
     if (!game) {
         console.error('Game object not found!');
         return;
@@ -158,11 +158,11 @@ function nextLevel() {
     if (currentLevel < 12) {
         currentLevel++;
         console.log('Moving to level:', currentLevel);
-        
+
         // Update the URL to reflect the new level
         const newUrl = `game.html?level=${currentLevel}`;
-        window.history.pushState({level: currentLevel}, '', newUrl);
-        
+        window.history.pushState({ level: currentLevel }, '', newUrl);
+
         // Load the new level
         game.loadLevel(currentLevel);
         game.reset(); // Reset game state
@@ -175,10 +175,10 @@ function nextLevel() {
             continueBtn.textContent = 'Tiếp tục';
             continueBtn.onclick = () => resumeGame();
         }
-        
+
         // Update level display
         updateLevelDisplay();
-        
+
     } else {
         // All levels completed
         console.log('All levels completed!');
@@ -215,7 +215,7 @@ function updateLevelDisplay() {
     if (levelElement) {
         levelElement.textContent = currentLevel;
     }
-    
+
     const titleElement = document.getElementById('levelTitle');
     if (titleElement && historicalData[currentLevel - 1]) {
         titleElement.textContent = historicalData[currentLevel - 1].title;

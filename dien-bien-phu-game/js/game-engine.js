@@ -272,10 +272,10 @@ class GameEngine {
         this.levelTimer = 0;
         this.enemySpawnTimer = 0;
         this.c47SpawnedThisLevel = 0;
-        
+
         // Reset defense health
         this.defenseHealth = this.maxDefenseHealth;
-        
+
         // Clear all game objects
         this.enemies = [];
         this.bullets = [];
@@ -283,7 +283,7 @@ class GameEngine {
         this.particles = [];
         this.explosions = [];
         this.powerUps = [];
-        
+
         // Reset power-ups
         this.activePowerUps = {
             rapidFire: false,
@@ -292,14 +292,14 @@ class GameEngine {
             spreadShot: false
         };
         this.powerUpTimers = {};
-        
+
         // Reset player
         if (this.player) {
             this.player.x = this.width / 2;
             this.player.y = this.height - 100;
             this.player.health = this.player.maxHealth;
         }
-        
+
         console.log('Game reset for level', this.currentLevel);
     }
 
@@ -308,7 +308,7 @@ class GameEngine {
         if (!levelData) return;
 
         this.currentLevel = levelId;
-        
+
         // Parse target kills from gameObjective with fallback
         const killsMatch = levelData.gameObjective.match(/\d+/);
         if (killsMatch) {
@@ -318,9 +318,9 @@ class GameEngine {
             console.warn(`No kill target found in gameObjective for level ${levelId}, using default`);
             this.targetKills = 10; // Default target
         }
-        
+
         console.log(`Level ${levelId} loaded, target kills: ${this.targetKills}`);
-        
+
         this.currentKills = 0;
         this.levelTimer = 0;
 
