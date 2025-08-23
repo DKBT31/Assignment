@@ -136,9 +136,9 @@ function resumeGame() {
 function restartLevel() {
     if (!game) return;
 
-    game.loadLevel(currentLevel);
-    game.start();
-    hideOverlay();
+    // Use the same approach as playAgain() - reload the page with current level
+    // This ensures a complete clean restart just like the working "chơi lại" after game completion
+    window.location.href = `game.html?level=${currentLevel}`;
 }
 
 // Go to home page
@@ -240,14 +240,13 @@ function showCompletionMessage() {
     message.innerHTML = `
         <h3>Bạn đã hoàn thành tất cả 12 ngày đêm lịch sử!</h3>
         <p>Chiến thắng "Điện Biên Phủ trên không" đã hoàn thành trong tay bạn.</p>
-        <p>Điểm tổng: ${gameState.totalScore}</p>
         <p>"Hà Nội - Điện Biên Phủ trên không" - 12 ngày đêm anh hùng!</p>
     `;
 
     buttons.innerHTML = `
         <button onclick="goHome()">Về trang chủ</button>
         <button onclick="playAgain()">Chơi lại từ đầu</button>
-        <button onclick="shareScore()">Chia sẻ thành tích</button>
+        <button onclick="shareAchievement()">Chia sẻ thành tích</button>
     `;
 
     overlay.classList.remove('hidden');
@@ -266,14 +265,13 @@ function playAgain() {
     gameState.currentLevel = 1;
     gameState.completedLevels = [];
     gameState.unlockedLevels = [1];
-    gameState.totalScore = 0;
     saveGameState();
 
     window.location.href = 'game.html?level=1';
 }
 
-function shareScore() {
-    const text = `Tôi vừa hoàn thành game "Chiến thắng Điện Biên Phủ" với ${gameState.totalScore} điểm! 🏆 #DieBienPhu #LichSu`;
+function shareAchievement() {
+    const text = `Tôi vừa hoàn thành game "Chiến thắng Điện Biên Phủ trên không"! 🏆 #DieBienPhu #LichSu`;
 
     if (navigator.share) {
         navigator.share({

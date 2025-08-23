@@ -19,8 +19,6 @@ class GameEngine {
         this.isRunning = false;
         this.isPaused = false;
         this.currentLevel = 1;
-        this.score = 0;
-        this.lives = 3;
         this.lastTime = 0;
 
         // Game objects
@@ -267,7 +265,6 @@ class GameEngine {
 
     reset() {
         // Reset game state for new level
-        this.score = 0;
         this.currentKills = 0;
         this.levelTimer = 0;
         this.enemySpawnTimer = 0;
@@ -362,7 +359,6 @@ class GameEngine {
 
         // Reset player
         this.setupPlayer();
-        this.lives = 3;
         this.updateUI();
     }
 
@@ -391,8 +387,6 @@ class GameEngine {
         this.stop();
 
         // Reset all game state
-        this.score = 0;
-        this.lives = 3;
         this.currentKills = 0;
         this.levelTimer = 0;
         this.enemySpawnTimer = 0;
@@ -924,7 +918,6 @@ class GameEngine {
 
                     if (enemy.health <= 0) {
                         // Enemy destroyed
-                        this.score += enemy.points || 100;
                         this.currentKills++;
                         this.createExplosion(enemy.x + enemy.width / 2, enemy.y + enemy.height / 2);
 
@@ -1043,7 +1036,6 @@ class GameEngine {
             gameState.unlockedLevels.push(this.currentLevel + 1);
         }
 
-        gameState.totalScore += this.score;
         saveGameState();
 
         this.playSound('victory');
@@ -1061,7 +1053,6 @@ class GameEngine {
         title.textContent = '🎉 Hoàn thành màn chơi!';
         message.innerHTML = `
             <p>Chúc mừng! Bạn đã hoàn thành ngày ${this.currentLevel}</p>
-            <p>Điểm số: ${this.score}</p>
             <p>Máy bay tiêu diệt: ${this.currentKills}/${this.targetKills}</p>
             <p>Sức khỏe phòng thủ: ${defenseHealthPercent}%</p>
             ${this.currentLevel < 12 ? '<p>Màn tiếp theo đã mở khóa!</p>' : '<p>🏆 Bạn đã hoàn thành tất cả 12 ngày!</p>'}
@@ -1093,7 +1084,6 @@ class GameEngine {
         title.textContent = '💥 Nhiệm vụ thất bại';
         message.innerHTML = `
             <p><strong>${reason}</strong></p>
-            <p>Điểm số: ${this.score}</p>
             <p>Máy bay tiêu diệt: ${this.currentKills}/${this.targetKills}</p>
             <p>"Bảo vệ Điện Biên Phủ là nhiệm vụ thiêng liêng!"</p>
         `;
@@ -1112,8 +1102,7 @@ class GameEngine {
     }
 
     updateUI() {
-        document.getElementById('score').textContent = this.score;
-        document.getElementById('lives').textContent = this.lives;
+        // UI update method - keeping for compatibility but removing score/lives updates
     }
 
     playSound(soundName) {

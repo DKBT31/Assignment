@@ -237,10 +237,8 @@ const gameAudio = {
 let gameState = {
     currentLevel: 1,
     score: 0,
-    lives: 3,
     completedLevels: [],
     unlockedLevels: [1],
-    totalScore: 0,
     achievements: []
 };
 
