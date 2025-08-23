@@ -69,11 +69,11 @@ class GameEngine {
     setupResponsiveCanvas() {
         // Get the container dimensions
         const container = this.canvas.parentElement;
-        const containerRect = container.getBoundingClientRect();
-
-        // Calculate available space (accounting for header and padding)
+        
+        // Calculate available space accounting for UI elements
+        const headerHeight = document.querySelector('.game-header')?.offsetHeight || 60;
         const availableWidth = window.innerWidth;
-        const availableHeight = window.innerHeight - 80; // Account for header
+        const availableHeight = window.innerHeight - headerHeight;
 
         // Calculate aspect ratio
         const gameAspectRatio = this.baseWidth / this.baseHeight;
@@ -81,35 +81,70 @@ class GameEngine {
 
         let canvasWidth, canvasHeight;
 
-        if (screenAspectRatio > gameAspectRatio) {
-            // Screen is wider than game - fit to height
-            canvasHeight = Math.min(availableHeight * 0.9, this.baseHeight);
-            canvasWidth = canvasHeight * gameAspectRatio;
+        // Mobile-specific optimizations
+        const isMobile = window.innerWidth <= 768;
+        const isLandscape = window.innerWidth > window.innerHeight;
+        
+        if (isMobile) {
+            if (isLandscape) {
+                // Landscape mobile - maximize screen usage
+                canvasWidth = availableWidth * 0.98;
+                canvasHeight = availableHeight * 0.95;
+                
+                // Maintain aspect ratio, prefer width fitting
+                if (canvasWidth / canvasHeight > gameAspectRatio) {
+                    canvasWidth = canvasHeight * gameAspectRatio;
+                } else {
+                    canvasHeight = canvasWidth / gameAspectRatio;
+                }
+            } else {
+                // Portrait mobile - fit to screen
+                canvasWidth = availableWidth * 0.95;
+                canvasHeight = canvasWidth / gameAspectRatio;
+                
+                // Ensure it doesn't exceed available height
+                if (canvasHeight > availableHeight * 0.9) {
+                    canvasHeight = availableHeight * 0.9;
+                    canvasWidth = canvasHeight * gameAspectRatio;
+                }
+            }
         } else {
-            // Screen is taller than game - fit to width
-            canvasWidth = Math.min(availableWidth * 0.95, this.baseWidth);
-            canvasHeight = canvasWidth / gameAspectRatio;
+            // Desktop handling (existing logic)
+            if (screenAspectRatio > gameAspectRatio) {
+                canvasHeight = Math.min(availableHeight * 0.9, this.baseHeight);
+                canvasWidth = canvasHeight * gameAspectRatio;
+            } else {
+                canvasWidth = Math.min(availableWidth * 0.95, this.baseWidth);
+                canvasHeight = canvasWidth / gameAspectRatio;
+            }
         }
 
-        // Ensure minimum sizes
-        canvasWidth = Math.max(320, canvasWidth);
-        canvasHeight = Math.max(180, canvasHeight);
+        // Ensure minimum sizes but optimize for mobile
+        const minWidth = isMobile ? 280 : 320;
+        const minHeight = isMobile ? 150 : 180;
+        
+        canvasWidth = Math.max(minWidth, canvasWidth);
+        canvasHeight = Math.max(minHeight, canvasHeight);
 
-        // Set canvas dimensions
+        // Set internal canvas dimensions to base resolution
         this.canvas.width = this.baseWidth;
         this.canvas.height = this.baseHeight;
 
         // Set CSS dimensions for scaling
-        this.canvas.style.width = canvasWidth + 'px';
-        this.canvas.style.height = canvasHeight + 'px';
+        this.canvas.style.width = Math.floor(canvasWidth) + 'px';
+        this.canvas.style.height = Math.floor(canvasHeight) + 'px';
 
-        // Calculate scaling factors for mouse input
+        // Calculate scaling factors for input
         this.scaleX = this.baseWidth / canvasWidth;
         this.scaleY = this.baseHeight / canvasHeight;
 
         // Update dimensions
         this.width = this.baseWidth;
         this.height = this.baseHeight;
+        
+        // Store mobile state for other optimizations
+        this.isMobile = isMobile;
+        this.isLandscape = isLandscape;
     }
 
     handleResize() {
@@ -124,6 +159,7 @@ class GameEngine {
         // Initialize game first, then load images in background
         this.setupPlayer();
         this.setupEventListeners();
+        this.setupMobileControls();
         this.loadLevel(this.currentLevel);
 
         // Load images asynchronously without blocking game start
@@ -189,16 +225,8 @@ class GameEngine {
             this.mouse.x = rawX * (this.scaleX || 1);
             this.mouse.y = rawY * (this.scaleY || 1);
 
-            // Tính góc từ pháo đến chuột
-            const dx = this.mouse.x - (this.player.x + this.player.width / 2);
-            const dy = this.mouse.y - (this.player.y + this.player.height / 2);
-
-            // Giới hạn góc ngắm (chỉ bắn lên trên)
-            let angle = Math.atan2(dy, dx);
-            if (angle > -Math.PI / 6) angle = -Math.PI / 6; // Không quá 30 độ phải
-            if (angle < -Math.PI + Math.PI / 6) angle = -Math.PI + Math.PI / 6; // Không quá 30 độ trái
-
-            this.player.angle = angle;
+            // Update gun angle
+            this.updateGunAngle();
         });
 
         this.canvas.addEventListener('click', (e) => {
@@ -210,6 +238,18 @@ class GameEngine {
         // Touch events for mobile devices
         this.canvas.addEventListener('touchstart', (e) => {
             e.preventDefault();
+            const rect = this.canvas.getBoundingClientRect();
+            const touch = e.touches[0];
+
+            // Calculate touch position with scaling
+            const rawX = touch.clientX - rect.left;
+            const rawY = touch.clientY - rect.top;
+            this.mouse.x = rawX * (this.scaleX || 1);
+            this.mouse.y = rawY * (this.scaleY || 1);
+
+            // Update gun angle immediately
+            this.updateGunAngle();
+
             if (!this.isPaused && this.isRunning) {
                 this.shoot();
             }
@@ -220,24 +260,28 @@ class GameEngine {
             const rect = this.canvas.getBoundingClientRect();
             const touch = e.touches[0];
 
-            // Account for scaling when calculating touch position
+            // Calculate touch position with scaling
             const rawX = touch.clientX - rect.left;
             const rawY = touch.clientY - rect.top;
-
-            // Scale touch coordinates to match game coordinates
             this.mouse.x = rawX * (this.scaleX || 1);
             this.mouse.y = rawY * (this.scaleY || 1);
 
-            // Tính góc từ pháo đến touch
-            const dx = this.mouse.x - (this.player.x + this.player.width / 2);
-            const dy = this.mouse.y - (this.player.y + this.player.height / 2);
+            // Update gun angle for aiming
+            this.updateGunAngle();
+        });
 
-            // Giới hạn góc ngắm (chỉ bắn lên trên)
-            let angle = Math.atan2(dy, dx);
-            if (angle > -Math.PI / 6) angle = -Math.PI / 6; // Không quá 30 độ phải
-            if (angle < -Math.PI + Math.PI / 6) angle = -Math.PI + Math.PI / 6; // Không quá 30 độ trái
+        this.canvas.addEventListener('touchend', (e) => {
+            e.preventDefault();
+        });
 
-            this.player.angle = angle;
+        // Prevent context menu on long press
+        this.canvas.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+        });
+
+        // Prevent scrolling when touching the canvas
+        this.canvas.addEventListener('touchforcechange', (e) => {
+            e.preventDefault();
         });
 
         // Keyboard events
@@ -260,6 +304,73 @@ class GameEngine {
             setTimeout(() => {
                 this.handleResize();
             }, 100);
+        });
+    }
+
+    updateGunAngle() {
+        if (!this.player) return;
+
+        // Calculate angle from gun to mouse/touch position
+        const dx = this.mouse.x - (this.player.x + this.player.width / 2);
+        const dy = this.mouse.y - (this.player.y + this.player.height / 2);
+
+        // Calculate angle and apply constraints (gun can only aim upward)
+        let angle = Math.atan2(dy, dx);
+        
+        // Limit aiming angle (only shoot upward)
+        if (angle > -Math.PI / 6) angle = -Math.PI / 6; // Not more than 30 degrees right
+        if (angle < -Math.PI + Math.PI / 6) angle = -Math.PI + Math.PI / 6; // Not more than 30 degrees left
+
+        this.player.angle = angle;
+    }
+
+    setupMobileControls() {
+        const touchFireBtn = document.getElementById('touchFireBtn');
+        const gameControls = document.querySelector('.game-controls');
+        const mobileInstructions = document.querySelector('.mobile-instructions');
+        
+        // Check if device is mobile
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) 
+                       || window.innerWidth <= 768;
+        
+        if (isMobile) {
+            // Show mobile controls
+            if (gameControls) gameControls.style.display = 'flex';
+            if (mobileInstructions) mobileInstructions.style.display = 'block';
+            
+            // Add touch fire button event
+            if (touchFireBtn) {
+                touchFireBtn.addEventListener('touchstart', (e) => {
+                    e.preventDefault();
+                    if (!this.isPaused && this.isRunning) {
+                        this.shoot();
+                    }
+                });
+                
+                touchFireBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    if (!this.isPaused && this.isRunning) {
+                        this.shoot();
+                    }
+                });
+            }
+        } else {
+            // Hide mobile controls on desktop
+            if (gameControls) gameControls.style.display = 'none';
+            if (mobileInstructions) mobileInstructions.style.display = 'none';
+        }
+
+        // Update controls visibility on resize
+        window.addEventListener('resize', () => {
+            const isMobileNow = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) 
+                             || window.innerWidth <= 768;
+            
+            if (gameControls) {
+                gameControls.style.display = isMobileNow ? 'flex' : 'none';
+            }
+            if (mobileInstructions) {
+                mobileInstructions.style.display = isMobileNow ? 'block' : 'none';
+            }
         });
     }
 

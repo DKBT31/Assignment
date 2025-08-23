@@ -940,3 +940,244 @@ body {
     color: #d0c0b0;
     opacity: 0.8;
 }
+
+/* Mobile-Specific Optimizations */
+@media (max-width: 768px) {
+    body {
+        overflow: hidden;
+        -webkit-overflow-scrolling: none;
+        position: fixed;
+        width: 100%;
+        height: 100%;
+    }
+
+    .game-header {
+        padding: 8px 15px;
+        min-height: 60px;
+    }
+
+    .level-info h1 {
+        font-size: 1.1rem;
+        margin-bottom: 2px;
+    }
+
+    .level-info p {
+        font-size: 0.8rem;
+    }
+
+    .game-stats {
+        gap: 15px;
+    }
+
+    .stat .label {
+        font-size: 0.75rem;
+    }
+
+    .stat span:last-child {
+        font-size: 1rem;
+    }
+
+    .pause-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+    }
+
+    .sound-toggle {
+        width: 35px;
+        height: 35px;
+        font-size: 0.9rem;
+    }
+}
+
+/* Landscape Mobile Optimizations */
+@media (max-height: 500px) and (orientation: landscape) {
+    .game-header {
+        padding: 5px 15px;
+        min-height: 50px;
+    }
+
+    .level-info h1 {
+        font-size: 1rem;
+        margin-bottom: 1px;
+    }
+
+    .level-info p {
+        font-size: 0.7rem;
+    }
+
+    .game-stats {
+        gap: 10px;
+    }
+
+    .stat .label {
+        font-size: 0.7rem;
+    }
+
+    .stat span:last-child {
+        font-size: 0.9rem;
+    }
+
+    .pause-btn {
+        width: 35px;
+        height: 35px;
+        font-size: 1rem;
+    }
+
+    .sound-toggle {
+        width: 30px;
+        height: 30px;
+        font-size: 0.8rem;
+    }
+
+    .game-area {
+        padding: 5px;
+    }
+
+    .overlay-content {
+        padding: 15px;
+        max-width: 90%;
+    }
+
+    .overlay-content h2 {
+        font-size: 1.2rem;
+        margin-bottom: 8px;
+    }
+
+    .overlay-content p {
+        font-size: 0.8rem;
+        margin-bottom: 15px;
+    }
+
+    .overlay-buttons {
+        gap: 8px;
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .overlay-buttons button {
+        padding: 8px 12px;
+        font-size: 0.8rem;
+        min-width: auto;
+        flex: none;
+    }
+}
+
+/* Touch-Friendly Interface */
+@media (pointer: coarse) {
+    .pause-btn,
+    .sound-toggle,
+    .overlay-buttons button {
+        min-height: 44px;
+        min-width: 44px;
+    }
+
+    .overlay-buttons button {
+        padding: 12px 20px;
+        font-size: 1rem;
+    }
+}
+
+/* Game Canvas Mobile Optimizations */
+@media (max-width: 768px) {
+    #gameCanvas {
+        max-width: 100vw;
+        max-height: calc(100vh - 60px);
+        touch-action: none;
+        user-select: none;
+        -webkit-user-select: none;
+        -webkit-touch-callout: none;
+    }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+    #gameCanvas {
+        max-height: calc(100vh - 50px);
+    }
+}
+
+/* Mobile Touch Interface Enhancements */
+@media (max-width: 768px) {
+    .game-controls {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 15px;
+        z-index: 1000;
+        background: rgba(0, 0, 0, 0.8);
+        padding: 10px;
+        border-radius: 15px;
+        border: 2px solid #8B4513;
+    }
+
+    .touch-fire-button {
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(145deg, #654321, #8B4513);
+        border: 2px solid #D2B48C;
+        border-radius: 50%;
+        color: #FFFFFF;
+        font-size: 14px;
+        font-weight: bold;
+        cursor: pointer;
+        user-select: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 
+            0 4px 8px rgba(0, 0, 0, 0.3),
+            inset 0 2px 4px rgba(255, 255, 255, 0.1);
+        transition: all 0.2s ease;
+    }
+
+    .touch-fire-button:active {
+        transform: scale(0.95);
+        box-shadow: 
+            0 2px 4px rgba(0, 0, 0, 0.3),
+            inset 0 1px 2px rgba(255, 255, 255, 0.1);
+        background: linear-gradient(145deg, #5D3F1A, #654321);
+    }
+
+    .mobile-instructions {
+        position: fixed;
+        bottom: 100px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(0, 0, 0, 0.8);
+        color: #D2B48C;
+        padding: 10px 20px;
+        border-radius: 10px;
+        border: 1px solid #8B4513;
+        font-size: 12px;
+        text-align: center;
+        z-index: 999;
+        opacity: 0.8;
+    }
+
+    /* Hide desktop cursor hint on mobile */
+    .cursor-hint {
+        display: none !important;
+    }
+}
+
+/* Landscape mobile optimizations for controls */
+@media screen and (orientation: landscape) and (max-height: 500px) {
+    .game-controls {
+        right: 20px;
+        left: auto;
+        transform: none;
+        bottom: 50%;
+        transform: translateY(50%);
+        flex-direction: column;
+    }
+
+    .mobile-instructions {
+        display: none;
+    }
+
+    #gameCanvas {
+        max-height: 90vh;
+    }
+}
