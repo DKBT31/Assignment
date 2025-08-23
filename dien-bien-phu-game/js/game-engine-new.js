@@ -9,6 +9,7 @@ class GameEngine {
         // Game state
         this.isRunning = false;
         this.isPaused = false;
+        this.isCompleted = false;
         this.currentLevel = 1;
         this.score = 0;
         this.lives = 3;
@@ -147,6 +148,7 @@ class GameEngine {
         this.targetKills = parseInt(levelData.gameObjective.match(/\d+/)[0]);
         this.currentKills = 0;
         this.levelTimer = 0;
+        this.isCompleted = false;
 
         // Clear arrays
         this.enemies = [];
@@ -194,14 +196,21 @@ class GameEngine {
     start() {
         this.isRunning = true;
         this.isPaused = false;
+        this.isCompleted = false;
         this.gameLoop();
     }
 
     pause() {
+        if (this.isCompleted) {
+            return; // Don't allow pausing when level is completed
+        }
         this.isPaused = true;
     }
 
     resume() {
+        if (this.isCompleted) {
+            return; // Don't allow resuming when level is completed
+        }
         this.isPaused = false;
     }
 
@@ -547,6 +556,7 @@ class GameEngine {
 
     levelComplete() {
         this.stop();
+        this.isCompleted = true;
 
         // Update game state
         if (!gameState.completedLevels.includes(this.currentLevel)) {

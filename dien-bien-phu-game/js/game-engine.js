@@ -18,6 +18,7 @@ class GameEngine {
         // Game state
         this.isRunning = false;
         this.isPaused = false;
+        this.isCompleted = false;
         this.currentLevel = 1;
         this.lastTime = 0;
 
@@ -269,6 +270,7 @@ class GameEngine {
         this.levelTimer = 0;
         this.enemySpawnTimer = 0;
         this.c47SpawnedThisLevel = 0;
+        this.isCompleted = false;
 
         // Reset defense health
         this.defenseHealth = this.maxDefenseHealth;
@@ -365,15 +367,22 @@ class GameEngine {
     start() {
         this.isRunning = true;
         this.isPaused = false;
+        this.isCompleted = false;
         this.lastTime = performance.now(); // Reset timing
         this.gameLoop();
     }
 
     pause() {
+        if (this.isCompleted) {
+            return; // Don't allow pausing when level is completed
+        }
         this.isPaused = true;
     }
 
     resume() {
+        if (this.isCompleted) {
+            return; // Don't allow resuming when level is completed
+        }
         this.isPaused = false;
         this.lastTime = performance.now(); // Reset timing để tránh delta time lớn
     }
@@ -1034,6 +1043,7 @@ class GameEngine {
 
     levelComplete() {
         this.stop();
+        this.isCompleted = true;
 
         // Update game state
         if (!gameState.completedLevels.includes(this.currentLevel)) {
@@ -1073,7 +1083,7 @@ class GameEngine {
 
             message.innerHTML = `
                 <div class="historical-completion">
-                    <h2 style="color: #fff; margin-bottom: 8px; font-size: 28px; font-weight: 600;">${levelData.title}</h2>
+                    <h2 style="color: #fff; margin-bottom: 8px; font-size: 28px; font-weight: 600;">Ngày ${this.currentLevel}: ${levelData.title}</h2>
                     <p style="color: #ccc; margin-bottom: 12px; font-size: 20px; text-align: center;">${levelData.date}</p>
                     
                     <div class="content-grid">

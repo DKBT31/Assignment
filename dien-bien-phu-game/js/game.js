@@ -220,7 +220,7 @@ function updateLevelDisplay() {
 
     const titleElement = document.getElementById('levelTitle');
     if (titleElement && historicalData[currentLevel - 1]) {
-        titleElement.textContent = historicalData[currentLevel - 1].title;
+        titleElement.textContent = `Ngày ${currentLevel}: ${historicalData[currentLevel - 1].title}`;
     }
 }
 
