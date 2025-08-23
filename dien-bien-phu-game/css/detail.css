@@ -1,8 +1,32 @@
 /* Detail Page Styles */
+/* Ensure full background coverage */
+html, body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #1a4b2e, #2d5016);
+    min-height: 100%;
+}
+
 .detail-container {
     min-height: 100vh;
     background: linear-gradient(135deg, #1a4b2e, #2d5016);
+    background-attachment: fixed;
     color: #e8f5e8;
+}
+
+/* Alternative background for mobile devices where fixed attachment might not work well */
+@media (max-width: 768px) {
+    .detail-container {
+        background-attachment: scroll;
+        padding-bottom: 20px;
+    }
+    
+    /* Ensure body and html have consistent background */
+    body {
+        background: linear-gradient(135deg, #1a4b2e, #2d5016);
+        margin: 0;
+        padding: 0;
+    }
 }
 
 .detail-header {
