@@ -15,7 +15,7 @@ const historicalData = [
     {
         id: 2,
         date: "19/12/1972",
-        title: "Ngày thứ hai - Ta bắn rơi B-52 đầu tiên",
+        title: "Ta bắn rơi B-52 đầu tiên",
         description: "Đêm 19/12, quân ta bắn rơi chiếc B-52 đầu tiên tại bầu trời Hà Nội, chứng minh tuyên bố 'B-52 bất khả xâm phạm' là sai lầm.",
         significance: "Cổ vũ tinh thần toàn quân và nhân dân, khẳng định niềm tin chiến thắng.",
         gameObjective: "Tiêu diệt 4 máy bay (có 1 B-52) trong đêm",
