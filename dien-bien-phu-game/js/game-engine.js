@@ -94,9 +94,9 @@ class GameEngine {
         
         if (isMobile) {
             if (isLandscape) {
-                // Landscape mobile - conservative sizing for better proportions
-                const maxWidth = availableWidth * 0.85;
-                const maxHeight = availableHeight * 0.80;
+                // Landscape mobile - very conservative sizing to prevent cropping
+                const maxWidth = availableWidth * 0.90;
+                const maxHeight = availableHeight * 0.85; // More conservative
                 
                 // Calculate based on aspect ratio with reasonable limits
                 canvasWidth = Math.min(maxWidth, maxHeight * gameAspectRatio);
@@ -108,9 +108,9 @@ class GameEngine {
                     canvasWidth = canvasHeight * gameAspectRatio;
                 }
             } else {
-                // Portrait mobile - smaller sizing for better control and proportions
-                const maxWidth = availableWidth * 0.88;
-                const maxHeight = availableHeight * 0.65; // Conservative height
+                // Portrait mobile - conservative sizing to prevent bottom cropping
+                const maxWidth = availableWidth * 0.90;
+                const maxHeight = availableHeight * 0.75; // Much more conservative for portrait
                 
                 // Start with width-based sizing
                 canvasWidth = maxWidth;
