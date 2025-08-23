@@ -1,5 +1,6 @@
 ﻿<!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,16 +11,17 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
 </head>
+
 <body>
     <div class="detail-container">
         <header class="detail-header">
             <div class="container">
                 <div class="back-navigation">
-                    <button onclick="goBack()" class="back-btn"> Quay lại</button>
-                    <button onclick="goHome()" class="home-btn"> Trang chủ</button>
+                    <button onclick="goBack()" class="back-btn">← Quay lại</button>
+                    <button onclick="goHome()" class="home-btn">🏠 Trang chủ</button>
                 </div>
-                <h1 class="detail-title">Ngày 4 - 12/17/1972 00:00:00.AddDays(4).ToString("dd/MM/yyyy")</h1>
-                <h2 class="detail-subtitle">Tiếp tục cuộc chiến trên không</h2>
+                <h1 class="detail-title">Ngày 4 - 21/12/1972</h1>
+                <h2 class="detail-subtitle">Địch giảm nhịp, ta giữ vững thế trận</h2>
             </div>
         </header>
 
@@ -27,34 +29,210 @@
             <div class="container">
                 <div class="content-grid">
                     <div class="main-content">
-                        <div id="custom-content" class="content-section">
-                            <h3>Nội dung chi tiết</h3>
-                            <p class="placeholder-text">
-                                <em>Nội dung chi tiết sẽ được cập nhật khi bạn gửi thông tin...</em>
-                            </p>
+                        <!-- Diễn biến chính -->
+                        <div class="content-section">
+                            <h3>📋 Diễn biến</h3>
+                            <div class="timeline-event">
+                                <div class="event-time">21/12/1972</div>
+                                <div class="event-description">
+                                    <p>Sau tổn thất nặng ngày 20/12, Mỹ <strong>giảm cường độ</strong>, chỉ còn
+                                        <strong>33 lượt B-52</strong>.</p>
+
+                                    <div class="strategy-change">
+                                        <h4>📊 So sánh cường độ tấn công:</h4>
+                                        <div class="intensity-comparison">
+                                            <div class="intensity-day">
+                                                <div class="day-label">Ngày 3 (20/12)</div>
+                                                <div class="intensity-bar high">
+                                                    <div class="bar-fill" style="width: 100%"></div>
+                                                    <span class="intensity-number">93 B-52</span>
+                                                </div>
+                                            </div>
+                                            <div class="intensity-day">
+                                                <div class="day-label">Ngày 4 (21/12)</div>
+                                                <div class="intensity-bar low">
+                                                    <div class="bar-fill" style="width: 35%"></div>
+                                                    <span class="intensity-number">33 B-52</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <p class="reduction-note">⬇️ Giảm <strong>64.5%</strong> so với ngày trước</p>
+                                    </div>
+
+                                    <div class="target-shift">
+                                        <h4>🎯 Thay đổi mục tiêu:</h4>
+                                        <div class="target-focus">
+                                            <div class="focus-item">
+                                                <span class="target-icon">🏭</span>
+                                                <span class="target-name">Hải Phòng</span>
+                                            </div>
+                                            <div class="focus-item">
+                                                <span class="target-icon">⚙️</span>
+                                                <span class="target-name">Thái Nguyên</span>
+                                            </div>
+                                        </div>
+                                        <p class="strategy-note">Chúng tập trung đánh phá các khu công nghiệp</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="response-section">
+                                <h4>🛡️ Phòng không Việt Nam</h4>
+                                <p>Phòng không Việt Nam tiếp tục duy trì hiệu quả cao, <strong>hạ thêm 2 B-52</strong>
+                                    bất chấp địch thay đổi chiến thuật.</p>
+                            </div>
+                        </div>
+
+                        <!-- Tổn thất -->
+                        <div class="content-section">
+                            <h3>💥 Tổn thất Mỹ</h3>
+                            <div class="casualties-grid">
+                                <div class="casualty-item consistent">
+                                    <div class="casualty-number">2</div>
+                                    <div class="casualty-type">B-52</div>
+                                    <div class="casualty-note">Duy trì hiệu quả</div>
+                                </div>
+                            </div>
+                            <div class="effectiveness-note">
+                                <p>📈 <strong>Tỷ lệ hạ:</strong> 2/33 = 6.1% (vẫn cao)</p>
+                            </div>
+                        </div>
+
+                        <!-- Ý nghĩa lịch sử -->
+                        <div class="content-section">
+                            <h3>⭐ Ý nghĩa lịch sử</h3>
+                            <div class="significance-content">
+                                <p>Mỹ bắt đầu <strong>lo sợ, điều chỉnh chiến thuật</strong> sau ngày "đen tối" 20/12.
+                                </p>
+                                <p class="highlight-text">Ta chứng minh thế trận phòng không liên hoàn vẫn hiệu quả,
+                                    ngay cả khi địch thay đổi mục tiêu.</p>
+                            </div>
+                        </div>
+
+                        <!-- Các sự kiện chính -->
+                        <div class="content-section">
+                            <h3>🎯 Sự kiện chính</h3>
+                            <div class="events-timeline">
+                                <div class="timeline-item-detail">
+                                    <div class="timeline-marker"></div>
+                                    <div class="timeline-content-detail">
+                                        Mỹ <strong>giảm mạnh cường độ</strong> từ 93 xuống 33 B-52.
+                                    </div>
+                                </div>
+                                <div class="timeline-item-detail">
+                                    <div class="timeline-marker"></div>
+                                    <div class="timeline-content-detail">
+                                        B-52 đánh <strong>Hải Phòng và Thái Nguyên</strong> thay vì Hà Nội.
+                                    </div>
+                                </div>
+                                <div class="timeline-item-detail">
+                                    <div class="timeline-marker"></div>
+                                    <div class="timeline-content-detail">
+                                        Ta bắn rơi thêm <strong>2 B-52</strong> dù địch thay đổi chiến thuật.
+                                    </div>
+                                </div>
+                                <div class="timeline-item-detail">
+                                    <div class="timeline-marker"></div>
+                                    <div class="timeline-content-detail">
+                                        Chứng minh <strong>thế trận phòng không liên hoàn</strong> vẫn hiệu quả.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Phân tích chiến lược -->
+                        <div class="content-section">
+                            <h3>🧠 Phân tích chiến lược</h3>
+                            <div class="strategic-analysis">
+                                <div class="analysis-grid">
+                                    <div class="analysis-item enemy">
+                                        <div class="analysis-header">
+                                            <span class="analysis-icon">🇺🇸</span>
+                                            <h4>Phía Mỹ</h4>
+                                        </div>
+                                        <ul>
+                                            <li>Giảm 64.5% cường độ tấn công</li>
+                                            <li>Chuyển hướng tránh Hà Nội</li>
+                                            <li>Tìm mục tiêu ít rủi ro hơn</li>
+                                            <li>Bắt đầu hoài nghi về B-52</li>
+                                        </ul>
+                                    </div>
+                                    <div class="analysis-item vietnam">
+                                        <div class="analysis-header">
+                                            <span class="analysis-icon">🇻🇳</span>
+                                            <h4>Phía Việt Nam</h4>
+                                        </div>
+                                        <ul>
+                                            <li>Duy trì thế trận liên hoàn</li>
+                                            <li>Thích ứng với thay đổi địch</li>
+                                            <li>Giữ vững tỷ lệ hạ máy bay</li>
+                                            <li>Chứng minh sự linh hoạt</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
                     <div class="sidebar">
                         <div class="info-box">
-                            <h4>Thông tin cơ bản</h4>
+                            <h4>📅 Thông tin cơ bản</h4>
                             <div class="info-item">
-                                <strong>Ngày:</strong> 12/17/1972 00:00:00.AddDays(4).ToString("dd/MM/yyyy")
+                                <strong>Ngày:</strong> 21/12/1972
                             </div>
                             <div class="info-item">
-                                <strong>Thời gian:</strong> 12 tiếng
+                                <strong>Thời gian:</strong> Cả ngày
                             </div>
                             <div class="info-item">
-                                <strong>Khu vực:</strong> Hà Nội
+                                <strong>Khu vực:</strong> Hải Phòng, Thái Nguyên
+                            </div>
+                            <div class="info-item">
+                                <strong>Tính chất:</strong> Điều chỉnh chiến thuật
+                            </div>
+                        </div>
+
+                        <div class="stats-box">
+                            <h4>📊 Thống kê so sánh</h4>
+                            <div class="stat-item">
+                                <span class="stat-label">B-52 ngày 3:</span>
+                                <span class="stat-value">93</span>
+                            </div>
+                            <div class="stat-item highlight">
+                                <span class="stat-label">B-52 ngày 4:</span>
+                                <span class="stat-value reduction">33 (-64.5%)</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">B-52 bị hạ:</span>
+                                <span class="stat-value">2</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Tỷ lệ hạ:</span>
+                                <span class="stat-value">6.1%</span>
+                            </div>
+                        </div>
+
+                        <div class="adaptation-box">
+                            <h4>🔄 Thích ứng chiến thuật</h4>
+                            <div class="adaptation-item">
+                                <span class="adaptation-label">Cường độ:</span>
+                                <span class="adaptation-value decrease">Giảm mạnh</span>
+                            </div>
+                            <div class="adaptation-item">
+                                <span class="adaptation-label">Mục tiêu:</span>
+                                <span class="adaptation-value shift">Chuyển hướng</span>
+                            </div>
+                            <div class="adaptation-item">
+                                <span class="adaptation-label">Hiệu quả VN:</span>
+                                <span class="adaptation-value maintain">Duy trì cao</span>
                             </div>
                         </div>
 
                         <div class="navigation-box">
-                            <h4>Điều hướng</h4>
-                            <button onclick="playDay(4)" class="play-btn"> Chơi lại ngày này</button>
-                            <button onclick="viewDay(3)" class="prev-btn"> Ngày trước</button>
-                            <button onclick="viewDay(5)" class="next-btn"> Ngày tiếp theo</button>
-                            <button onclick="viewAllDays()" class="overview-btn"> Xem tất cả</button>
+                            <h4>🧭 Điều hướng</h4>
+                            <button onclick="playDay(4)" class="play-btn">🎮 Chơi lại ngày này</button>
+                            <button onclick="viewDay(3)" class="prev-btn">⬅️ Ngày trước</button>
+                            <button onclick="viewDay(5)" class="next-btn">➡️ Ngày tiếp theo</button>
+                            <button onclick="viewAllDays()" class="overview-btn">📋 Xem tất cả</button>
                         </div>
                     </div>
                 </div>
@@ -65,4 +243,5 @@
     <script src="../js/data.js"></script>
     <script src="../js/detail.js"></script>
 </body>
+
 </html>

@@ -1,5 +1,11 @@
 // Main JavaScript cho trang chủ
 document.addEventListener('DOMContentLoaded', function () {
+    // For testing: add some completed levels
+    if (gameState.completedLevels.length === 0) {
+        gameState.completedLevels = [1, 2, 3]; // Test with first 3 levels completed
+        gameState.unlockedLevels = [1, 2, 3, 4, 5]; // And unlock first 5 levels
+    }
+
     initializeTimeline();
     updateProgress();
     setupAudio();
@@ -15,12 +21,18 @@ function initializeTimeline() {
 
         const status = getTimelineStatus(day.id);
 
+        // Create detail button for completed days
+        const detailButton = getDetailButton(day.id, status);
+
         timelineItem.innerHTML = `
             <div class="timeline-content" onclick="openDay(${day.id})">
                 <div class="timeline-date">${day.date}</div>
                 <div class="timeline-title">${day.title}</div>
                 <div class="timeline-desc">${day.description.substring(0, 100)}...</div>
-                <div class="timeline-status ${status.className}">${status.text}</div>
+                <div class="timeline-status-container">
+                    <div class="timeline-status ${status.className}">${status.text}</div>
+                    ${detailButton}
+                </div>
             </div>
         `;
 
@@ -31,12 +43,20 @@ function initializeTimeline() {
 // Xác định trạng thái của từng ngày
 function getTimelineStatus(dayId) {
     if (gameState.completedLevels.includes(dayId)) {
-        return { className: 'status-completed', text: '✓ Đã hoàn thành' };
+        return { className: 'status-completed', text: '✓ Hoàn thành' };
     } else if (gameState.unlockedLevels.includes(dayId)) {
         return { className: 'status-available', text: '🎮 Có thể chơi' };
     } else {
         return { className: 'status-locked', text: '🔒 Chưa mở khóa' };
     }
+}
+
+// Tạo button xem chi tiết cho các ngày đã hoàn thành
+function getDetailButton(dayId, status) {
+    if (status.className === 'status-completed') {
+        return `<button class="detail-btn" onclick="event.stopPropagation(); viewDayDetail(${dayId})">📖 Xem chi tiết</button>`;
+    }
+    return '';
 }
 
 // Cập nhật tiến độ
@@ -62,6 +82,12 @@ function openDay(dayId) {
 
     // Chuyển đến trang game với level tương ứng
     window.location.href = `game.html?level=${dayId}`;
+}
+
+// Xem chi tiết một ngày đã hoàn thành
+function viewDayDetail(dayId) {
+    // Chuyển đến trang chi tiết của ngày đó
+    window.location.href = `details/day${dayId}.html`;
 }
 
 // Bắt đầu hành trình
