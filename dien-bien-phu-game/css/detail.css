@@ -362,6 +362,61 @@
     .navigation-box {
         padding: 20px;
     }
+
+    /* Responsive fixes for Day 3 & 4 specific elements */
+    .intensity-day {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+
+    .day-label {
+        min-width: auto;
+        text-align: center;
+        margin-bottom: 5px;
+    }
+
+    .intensity-bar {
+        min-height: 35px;
+    }
+
+    .intensity-number {
+        font-size: 0.9rem;
+    }
+
+    .units-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .unit-card {
+        padding: 10px;
+        min-height: 60px;
+    }
+
+    .comparison-item {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+    }
+
+    .comparison-day {
+        min-width: auto;
+        text-align: center;
+    }
+
+    .milestone-item,
+    .adaptation-item {
+        flex-direction: column;
+        text-align: center;
+        gap: 5px;
+    }
+
+    .strategy-change,
+    .coordination-highlight {
+        padding: 15px;
+        margin: 15px 0;
+    }
 }
 
 /* Animation for elements */
