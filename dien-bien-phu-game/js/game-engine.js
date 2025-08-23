@@ -1058,52 +1058,53 @@ class GameEngine {
         } else {
             // Display historical content
             title.innerHTML = `
-                <div style="background: #d32f2f; color: white; border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; margin: 0 auto 5px; font-size: 16px; font-weight: bold;">
+                <div style="background: #d32f2f; color: white; border-radius: 50%; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; font-size: 24px; font-weight: bold;">
                     ${this.currentLevel}
                 </div>
             `;
 
             message.innerHTML = `
                 <div class="historical-completion">
-                    <h2 style="color: #fff; margin-bottom: 2px; font-size: 18px; font-weight: 600;">${levelData.title}</h2>
-                    <p style="color: #ccc; margin-bottom: 6px; font-size: 14px; text-align: center;">${levelData.date}</p>
+                    <h2 style="color: #fff; margin-bottom: 8px; font-size: 28px; font-weight: 600;">${levelData.title}</h2>
+                    <p style="color: #ccc; margin-bottom: 12px; font-size: 20px; text-align: center;">${levelData.date}</p>
                     
                     <div class="content-grid">
-                        <div style="background: rgba(139, 69, 19, 0.8); padding: 8px; border-radius: 4px;">
-                            <h4 style="color: #ffab40; margin-bottom: 4px; font-size: 13px; font-weight: 600;">🎯 Tổn thất Mỹ</h4>
-                            <p style="color: #ffab40; font-weight: bold; font-size: 18px; margin: 0;">
+                        <div style="background: rgba(139, 69, 19, 0.8); padding: 16px; border-radius: 8px;">
+                            <h4 style="color: #ffab40; margin-bottom: 8px; font-size: 20px; font-weight: 600;">🎯 Tổn thất Mỹ</h4>
+                            <p style="color: #ffab40; font-weight: bold; font-size: 28px; margin: 0;">
                                 ${this.currentKills} máy bay bị bắn rơi
                             </p>
-                            <p style="color: #ffcc80; font-size: 12px; margin-top: 2px;">
+                            <p style="color: #ffcc80; font-size: 18px; margin-top: 4px;">
                                 Mục tiêu: ${this.targetKills} máy bay
                             </p>
                         </div>
                         
-                        <div style="background: rgba(27, 94, 32, 0.8); padding: 8px; border-radius: 4px;">
-                            <h4 style="color: #81c784; margin-bottom: 4px; font-size: 13px; font-weight: 600;">🏆 Ý nghĩa lịch sử</h4>
-                            <p style="color: #a5d6a7; font-size: 12px; line-height: 1.3; margin: 0;">
+                        <div style="background: rgba(27, 94, 32, 0.8); padding: 16px; border-radius: 8px;">
+                            <h4 style="color: #81c784; margin-bottom: 8px; font-size: 20px; font-weight: 600;">🏆 Ý nghĩa lịch sử</h4>
+                            <p style="color: #a5d6a7; font-size: 18px; line-height: 1.4; margin: 0;">
                                 ${levelData.significance}
                             </p>
                         </div>
                     </div>
                     
-                    <div style="background: rgba(69, 90, 100, 0.6); padding: 8px; border-radius: 4px; margin-bottom: 6px;" class="full-width">
-                        <h4 style="color: #90caf9; margin-bottom: 4px; font-size: 13px; font-weight: 600;">📖 Diễn biến chi tiết</h4>
-                        <p style="color: #b0bec5; font-size: 12px; line-height: 1.4; margin: 0;">
+                    <div style="background: rgba(69, 90, 100, 0.6); padding: 16px; border-radius: 8px; margin-bottom: 12px;" class="full-width">
+                        <h4 style="color: #90caf9; margin-bottom: 8px; font-size: 20px; font-weight: 600;">📖 Diễn biến chi tiết</h4>
+                        <p style="color: #b0bec5; font-size: 18px; line-height: 1.5; margin: 0;">
                             ${levelData.description}
                         </p>
                     </div>
                     
-                    <blockquote style="border-left: 2px solid #d32f2f; padding-left: 6px; margin: 4px 0; background: rgba(0,0,0,0.3); padding: 6px; border-radius: 3px;" class="full-width">
-                        <p style="color: #fff; font-style: italic; margin: 0; font-size: 13px; text-align: center; font-weight: 500;">
+                    <blockquote style="border-left: 4px solid #d32f2f; padding-left: 12px; margin: 8px 0; background: rgba(0,0,0,0.4); padding: 12px; border-radius: 6px;" class="full-width">
+                        <p style="color: #fff; font-style: italic; margin: 0; font-size: 19px; text-align: center; font-weight: 500; line-height: 1.4;">
                             "${levelData.historicalQuote}"
+                        </p>
                         </p>
                     </blockquote>
                     
-                    <div class="full-width" style="text-align: center; margin-top: 6px;">
+                    <div class="full-width" style="text-align: center; margin-top: 12px;">
                         ${this.currentLevel < 12 ?
-                    '<p style="color: #4caf50; font-weight: bold; font-size: 14px; margin: 0;">✅ Ngày tiếp theo đã mở khóa!</p>' :
-                    '<p style="color: #ffd700; font-weight: bold; font-size: 14px; margin: 0;">🏆 Hoàn thành chiến dịch "Điện Biên Phủ trên không"!</p>'
+                    '<p style="color: #4caf50; font-weight: bold; font-size: 22px; margin: 0; padding: 10px;">✅ Ngày tiếp theo đã mở khóa!</p>' :
+                    '<p style="color: #ffd700; font-weight: bold; font-size: 22px; margin: 0; padding: 10px;">🏆 Hoàn thành chiến dịch "Điện Biên Phủ trên không"!</p>'
                 }
                     </div>
                 </div>
