@@ -70,8 +70,19 @@ class GameEngine {
         // Get the container dimensions
         const container = this.canvas.parentElement;
         
+        // Mobile-specific detection
+        const isMobile = window.innerWidth <= 768;
+        const isLandscape = window.innerWidth > window.innerHeight;
+        
         // Calculate available space accounting for UI elements
-        const headerHeight = document.querySelector('.game-header')?.offsetHeight || 60;
+        let headerHeight = 0;
+        if (isMobile && isLandscape && window.innerHeight <= 500) {
+            // Landscape mobile - header is hidden
+            headerHeight = 0;
+        } else {
+            headerHeight = document.querySelector('.game-header')?.offsetHeight || 60;
+        }
+        
         const availableWidth = window.innerWidth;
         const availableHeight = window.innerHeight - headerHeight;
 
@@ -80,31 +91,34 @@ class GameEngine {
         const screenAspectRatio = availableWidth / availableHeight;
 
         let canvasWidth, canvasHeight;
-
-        // Mobile-specific optimizations
-        const isMobile = window.innerWidth <= 768;
-        const isLandscape = window.innerWidth > window.innerHeight;
         
         if (isMobile) {
             if (isLandscape) {
-                // Landscape mobile - maximize screen usage
-                canvasWidth = availableWidth * 0.98;
-                canvasHeight = availableHeight * 0.95;
+                // Landscape mobile - conservative sizing for better proportions
+                const maxWidth = availableWidth * 0.85;
+                const maxHeight = availableHeight * 0.80;
                 
-                // Maintain aspect ratio, prefer width fitting
-                if (canvasWidth / canvasHeight > gameAspectRatio) {
-                    canvasWidth = canvasHeight * gameAspectRatio;
-                } else {
-                    canvasHeight = canvasWidth / gameAspectRatio;
-                }
-            } else {
-                // Portrait mobile - fit to screen
-                canvasWidth = availableWidth * 0.95;
+                // Calculate based on aspect ratio with reasonable limits
+                canvasWidth = Math.min(maxWidth, maxHeight * gameAspectRatio);
                 canvasHeight = canvasWidth / gameAspectRatio;
                 
-                // Ensure it doesn't exceed available height
-                if (canvasHeight > availableHeight * 0.9) {
-                    canvasHeight = availableHeight * 0.9;
+                // Double-check height constraint
+                if (canvasHeight > maxHeight) {
+                    canvasHeight = maxHeight;
+                    canvasWidth = canvasHeight * gameAspectRatio;
+                }
+            } else {
+                // Portrait mobile - smaller sizing for better control and proportions
+                const maxWidth = availableWidth * 0.88;
+                const maxHeight = availableHeight * 0.65; // Conservative height
+                
+                // Start with width-based sizing
+                canvasWidth = maxWidth;
+                canvasHeight = canvasWidth / gameAspectRatio;
+                
+                // If height exceeds limit, constrain by height instead
+                if (canvasHeight > maxHeight) {
+                    canvasHeight = maxHeight;
                     canvasWidth = canvasHeight * gameAspectRatio;
                 }
             }
