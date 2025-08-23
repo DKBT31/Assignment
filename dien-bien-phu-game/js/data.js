@@ -276,20 +276,21 @@ function saveGameState() {
 
 // Helper functions for environment-aware navigation
 function getBasePath() {
-    // Check if we're already in the dien-bien-phu-game folder
+    // Check if we're in production (Vercel)
+    if (!window.location.hostname.includes('localhost') && !window.location.hostname.includes('127.0.0.1')) {
+        return ''; // Production - no prefix needed
+    }
+    
+    // For local development, check if we're already inside the game folder
     const currentPath = window.location.pathname;
     
-    // If the current path already contains 'dien-bien-phu-game', we don't need to add it
+    // If we're already in the dien-bien-phu-game folder (like /dien-bien-phu-game/game.html)
     if (currentPath.includes('/dien-bien-phu-game/')) {
-        return '';
+        return ''; // Already in subfolder, no prefix needed
     }
     
-    // If we're on localhost/127.0.0.1 and NOT already in the subfolder, add the prefix
-    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-        return 'dien-bien-phu-game/';
-    }
-    
-    return ''; // Production environment (Vercel) or already in subfolder
+    // If we're on the root or index page, we need the prefix
+    return 'dien-bien-phu-game/';
 }
 
 function buildPath(relativePath) {
