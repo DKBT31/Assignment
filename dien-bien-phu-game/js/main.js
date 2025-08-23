@@ -81,19 +81,19 @@ function openDay(dayId) {
     }
 
     // Chuyển đến trang game với level tương ứng
-    window.location.href = `game.html?level=${dayId}`;
+    window.location.href = `dien-bien-phu-game/game.html?level=${dayId}`;
 }
 
 // Xem chi tiết một ngày đã hoàn thành
 function viewDayDetail(dayId) {
     // Chuyển đến trang chi tiết của ngày đó
-    window.location.href = `details/day${dayId}.html`;
+    window.location.href = `dien-bien-phu-game/details/day${dayId}.html`;
 }
 
 // Bắt đầu hành trình
 function startJourney() {
     const firstUnlocked = Math.min(...gameState.unlockedLevels);
-    window.location.href = `game.html?level=${firstUnlocked}`;
+    window.location.href = `dien-bien-phu-game/game.html?level=${firstUnlocked}`;
 }
 
 // Setup âm thanh

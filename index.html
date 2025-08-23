@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Điện Biên Phủ Trên Không - 12 Ngày Đêm Lịch Sử</title>
+    <link rel="stylesheet" href="dien-bien-phu-game/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="hero-section">
+        <div class="container">
+            <header class="main-header">
+                <h1 class="main-title">
+                    <span class="title-line">ĐIỆN BIÊN PHỦ TRÊN KHÔNG</span>
+                    <span class="subtitle">"12 ngày đêm chống máy bay B-52"</span>
+                </h1>
+                <div class="date-range">18/12/1972 - 29/12/1972</div>
+            </header>
+
+            <div class="intro-content">
+                <div class="intro-text">
+                    <h2>Trải Nghiệm 12 Ngày Đêm Lịch Sử</h2>
+                    <p class="quote">"Hà Nội - Điện Biên Phủ trên không"</p>
+                    <p class="quote-author">- Chiến thắng của người dân Thủ đô</p>
+
+                    <div class="description">
+                        <p>Hãy cùng trải nghiệm 12 ngày đêm anh dũng của chiến dịch "Điện Biên Phủ trên không" - cuộc
+                            đấu tranh chống lại chiến dịch ném bom B-52 của Mỹ tại Hà Nội và Hải Phòng.
+                            Mỗi ngày là một bài học lịch sử, mỗi màn chơi là một chiến công vẻ vang.</p>
+
+                        <div class="features">
+                            <div class="feature">
+                                <h3>🎯 12 Màn Chơi</h3>
+                                <p>Tương ứng với 12 ngày đêm chống B-52</p>
+                            </div>
+                            <div class="feature">
+                                <h3>📚 Học Lịch Sử</h3>
+                                <p>Tìm hiểu về cuộc kháng chiến chống Mỹ</p>
+                            </div>
+                            <div class="feature">
+                                <h3>🎮 Game Hấp Dẫn</h3>
+                                <p>Trải nghiệm trận đánh phòng không</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stats-panel">
+                    <h3>Kết Quả Chiến Dịch</h3>
+                    <div class="achievement-stats">
+                        <div class="stat-achievement">
+                            <div class="stat-icon">✈️</div>
+                            <div class="stat-info">
+                                <div class="stat-number">81</div>
+                                <div class="stat-label">Máy bay Mỹ các loại bị bắn rơi</div>
+                            </div>
+                        </div>
+
+                        <div class="stat-achievement">
+                            <div class="stat-icon">🎯</div>
+                            <div class="stat-info">
+                                <div class="stat-number">34</div>
+                                <div class="stat-label">Máy bay B-52 bị hạ (16 chiếc rơi tại chỗ)</div>
+                            </div>
+                        </div>
+
+                        <div class="stat-achievement">
+                            <div class="stat-icon">�</div>
+                            <div class="stat-info">
+                                <div class="stat-number">43</div>
+                                <div class="stat-label">Giặc lái bị bắt sống</div>
+                            </div>
+                        </div>
+
+                        <div class="stat-achievement">
+                            <div class="stat-icon">�️</div>
+                            <div class="stat-info">
+                                <div class="stat-number">33</div>
+                                <div class="stat-label">Giặc lái B-52 bị bắt</div>
+                            </div>
+                        </div>
+
+                        <div class="stat-achievement">
+                            <div class="stat-icon">💣</div>
+                            <div class="stat-info">
+                                <div class="stat-number">10,000+</div>
+                                <div class="stat-label">Tấn bom địch thả xuống</div>
+                            </div>
+                        </div>
+
+                        <div class="stat-achievement">
+                            <div class="stat-icon">🛩️</div>
+                            <div class="stat-info">
+                                <div class="stat-number">444</div>
+                                <div class="stat-label">Lần máy bay B-52 tham gia</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="historical-note">
+                        <div class="note-icon">�</div>
+                        <div class="note-content">
+                            <strong>Thống kê chi tiết:</strong><br>
+                            Bao gồm: 5 F-111A, 21 F-4, 12 A-7, 1 F-105, 4 A-6, 2 RA-5C, 1 trực thăng HH-53, 1 máy bay
+                            không người lái.
+                            Lượng bom trung bình: Hà Nội 33,33 tấn/km², Đức 5,4 tấn/km².
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-section">
+                <button class="start-button" onclick="startJourney()">
+                    🚀 Bắt Đầu Hành Trình
+                </button>
+
+                <div class="progress-info">
+                    <p>Tiến độ của bạn: <span id="progress">0/12 ngày</span></p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Damage Statistics Section -->
+    <section class="damage-section">
+        <div class="container">
+            <h2>Tổn Thất Trong 12 Ngày Đêm</h2>
+            <div class="damage-grid">
+                <div class="damage-card enemy-losses">
+                    <h3>🇺🇸 Tổn Thất Của Mỹ</h3>
+                    <div class="damage-stats">
+                        <div class="damage-item">
+                            <span class="damage-number">81</span>
+                            <span class="damage-label">máy bay các loại</span>
+                        </div>
+                        <div class="damage-breakdown">
+                            <div class="breakdown-item">34 B-52 <small>(có 16 chiếc rơi tại chỗ)</small></div>
+                            <div class="breakdown-item">5 F-111A, 21 F-4, 12 A-7</div>
+                            <div class="breakdown-item">1 F-105, 4 A-6, 2 RA-5C</div>
+                            <div class="breakdown-item">1 trực thăng HH-53</div>
+                            <div class="breakdown-item">1 máy bay không người lái</div>
+                        </div>
+                        <div class="damage-item">
+                            <span class="damage-number">43</span>
+                            <span class="damage-label">phi công bị bắt sống</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="damage-card vietnam-impact">
+                    <h3>🇻🇳 Thiệt Hại Của Việt Nam</h3>
+                    <div class="damage-stats">
+                        <div class="damage-item casualties">
+                            <span class="damage-number">2,380</span>
+                            <span class="damage-label">người thiệt mạng</span>
+                        </div>
+                        <div class="damage-item casualties">
+                            <span class="damage-number">1,355</span>
+                            <span class="damage-label">người bị thương</span>
+                        </div>
+                        <div class="infrastructure-damage">
+                            <h4>Cơ sở hạ tầng bị phá hủy:</h4>
+                            <div class="damage-list">
+                                <div>• 4 thị trấn, 67 xã ngoại thành</div>
+                                <div>• 37 khối phố nội thành</div>
+                                <div>• 17 làn cầu Đường</div>
+                                <div>• 14 làn cầu Long Biên</div>
+                                <div>• 14 làn ga Yên Viên</div>
+                                <div>• 8 làn Nhà máy điện Yên Phụ</div>
+                                <div>• 7/9 ga xe lửa</div>
+                                <div>• 4/5 cầu, 4/5 phà</div>
+                                <div>• 1/3 nhà máy, xí nghiệp</div>
+                                <div>• 5 bệnh viện</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bombing-intensity">
+                <h3>Cường Độ Ném Bom</h3>
+                <div class="intensity-comparison">
+                    <div class="intensity-item">
+                        <div class="intensity-icon">🏙️</div>
+                        <div class="intensity-info">
+                            <div class="intensity-number">33.33</div>
+                            <div class="intensity-label">tấn/km² tại Hà Nội</div>
+                            <div class="intensity-note">(Cao gấp 6 lần Đức trong WWII)</div>
+                        </div>
+                    </div>
+                    <div class="intensity-item">
+                        <div class="intensity-icon">🏭</div>
+                        <div class="intensity-info">
+                            <div class="intensity-number">5.4</div>
+                            <div class="intensity-label">tấn/km² tại Đức WWII</div>
+                            <div class="intensity-note">(Chiến tranh thế giới thứ 2)</div>
+                        </div>
+                    </div>
+                    <div class="intensity-item">
+                        <div class="intensity-icon">💣</div>
+                        <div class="intensity-info">
+                            <div class="intensity-number">0.43</div>
+                            <div class="intensity-label">tấn/km² tại Nhật WWII</div>
+                            <div class="intensity-note">(Chiến tranh thế giới thứ 2)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="timeline-section">
+        <div class="container">
+            <h2>12 Ngày Đêm Lịch Sử</h2>
+            <div class="timeline" id="timeline">
+                <!-- Timeline sẽ được tạo bằng JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <footer class="main-footer">
+        <div class="container">
+            <p>&copy; 2025 - Dự án môn VNR202 - Lịch sử Đảng Cộng sản Việt Nam</p>
+            <p>"Hà Nội - Điện Biên Phủ trên không" - 12 ngày đêm anh hùng</p>
+        </div>
+    </footer>
+
+    <audio id="backgroundMusic" loop>
+        <source src="dien-bien-phu-game/assets/audio/background.mp3" type="audio/mpeg">
+    </audio>
+
+    <script src="dien-bien-phu-game/js/data.js"></script>
+    <script src="dien-bien-phu-game/js/main.js"></script>
+</body>
+
+</html>

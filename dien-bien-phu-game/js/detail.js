@@ -5,13 +5,13 @@ function goBack() {
     if (document.referrer && document.referrer.includes('index.html')) {
         window.history.back();
     } else {
-        window.location.href = '../index.html';
+        window.location.href = '../../index.html';
     }
 }
 
 // Go to home page
 function goHome() {
-    window.location.href = '../index.html';
+    window.location.href = '../../index.html';
 }
 
 // Play a specific day (redirect to game)
@@ -26,7 +26,7 @@ function viewDay(dayId) {
 
 // View all days (go back to timeline)
 function viewAllDays() {
-    window.location.href = '../index.html#timeline';
+    window.location.href = '../../index.html#timeline';
 }
 
 // Add smooth scrolling and fade-in animations

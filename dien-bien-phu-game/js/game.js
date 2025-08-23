@@ -145,7 +145,7 @@ function restartLevel() {
 
 // Go to home page
 function goHome() {
-    window.location.href = 'index.html';
+    window.location.href = '../index.html';
 }
 
 // Go to next level
