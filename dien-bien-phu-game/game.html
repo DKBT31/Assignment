@@ -73,6 +73,11 @@
             <h4>Điều khiển:</h4>
             <p>🖱️ Di chuyển chuột để nhắm | Click để bắn | SPACE để pause</p>
         </div>
+
+        <!-- Sound toggle button -->
+        <div class="sound-toggle" id="soundToggle" onclick="toggleSound()">
+            <span id="soundIcon">🔊</span>
+        </div>
     </div>
 
     <!-- Audio elements -->
@@ -86,7 +91,7 @@
         <source src="assets/audio/explosion.mp3" type="audio/mpeg">
     </audio>
     <audio id="powerUpSound">
-        <source src="assets/audio/powerup.wav" type="audio/wav">
+        <source src="assets/audio/powerup.mp3" type="audio/mpeg">
     </audio>
     <audio id="victorySound">
         <source src="assets/audio/victory.wav" type="audio/wav">

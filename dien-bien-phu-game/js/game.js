@@ -98,7 +98,9 @@ function setupAudio() {
 
     // Auto-play music when user interacts with the page
     document.addEventListener('click', function playMusic() {
-        gameMusic.play().catch(e => console.log('Cannot play music:', e));
+        if (soundEnabled) {
+            gameMusic.play().catch(e => console.log('Cannot play music:', e));
+        }
         document.removeEventListener('click', playMusic);
     }, { once: true });
 
@@ -421,4 +423,78 @@ window.addEventListener('beforeunload', function () {
         game.stop();
         saveGameState();
     }
+});
+
+// Sound toggle functionality
+function toggleSound() {
+    soundEnabled = !soundEnabled;
+
+    const soundToggle = document.getElementById('soundToggle');
+    const soundIcon = document.getElementById('soundIcon');
+    const gameMusic = document.getElementById('gameMusic');
+
+    if (soundEnabled) {
+        soundIcon.textContent = '🔊';
+        soundToggle.classList.remove('muted');
+        soundToggle.title = 'Tắt âm thanh';
+
+        // Resume background music if it was playing
+        if (gameMusic && gameMusic.paused) {
+            gameMusic.play().catch(e => console.log('Cannot play music:', e));
+        }
+    } else {
+        soundIcon.textContent = '🔇';
+        soundToggle.classList.add('muted');
+        soundToggle.title = 'Bật âm thanh';
+
+        // Stop all currently playing audio including background music
+        const audioElements = document.querySelectorAll('audio');
+        audioElements.forEach(audio => {
+            audio.pause();
+            audio.currentTime = 0;
+        });
+    }
+
+    // Update game engine audio state
+    if (game) {
+        game.audioEnabled = soundEnabled;
+    }
+
+    // Save sound preference
+    localStorage.setItem('soundEnabled', soundEnabled);
+}
+
+// Initialize sound toggle state
+function initSoundToggle() {
+    // Load saved sound preference
+    const savedSoundState = localStorage.getItem('soundEnabled');
+    if (savedSoundState !== null) {
+        soundEnabled = JSON.parse(savedSoundState);
+    }
+
+    // Set initial state
+    const soundToggle = document.getElementById('soundToggle');
+    const soundIcon = document.getElementById('soundIcon');
+
+    if (soundToggle && soundIcon) {
+        if (soundEnabled) {
+            soundIcon.textContent = '🔊';
+            soundToggle.classList.remove('muted');
+            soundToggle.title = 'Tắt âm thanh';
+        } else {
+            soundIcon.textContent = '🔇';
+            soundToggle.classList.add('muted');
+            soundToggle.title = 'Bật âm thanh';
+        }
+    }
+
+    // Update game engine audio state
+    if (game) {
+        game.audioEnabled = soundEnabled;
+    }
+}
+
+// Initialize sound toggle when page loads
+document.addEventListener('DOMContentLoaded', function () {
+    setTimeout(initSoundToggle, 100); // Delay to ensure elements are loaded
 });

@@ -601,7 +601,7 @@ class GameEngine {
             detailBtn.id = 'detailBtn';
             detailBtn.textContent = '📚 Xem chi tiết lịch sử';
             detailBtn.onclick = () => this.viewDayDetail();
-            
+
             const buttonContainer = document.querySelector('.overlay-buttons');
             buttonContainer.insertBefore(detailBtn, buttonContainer.firstChild);
         }
@@ -636,7 +636,8 @@ class GameEngine {
     }
 
     playSound(soundName) {
-        if (!this.audioEnabled) return;
+        // Check both game engine audio state and global sound toggle
+        if (!this.audioEnabled || !soundEnabled) return;
 
         const audio = document.getElementById(soundName + 'Sound');
         if (audio) {

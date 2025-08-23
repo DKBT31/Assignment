@@ -228,7 +228,7 @@ const gameAudio = {
     background: 'assets/audio/background.mp3',
     shoot: 'assets/audio/fire.mp3',
     explosion: 'assets/audio/explosion.mp3',
-    powerUp: 'assets/audio/powerup.wav',
+    powerUp: 'assets/audio/powerup.mp3',
     victory: 'assets/audio/victory.wav',
     levelComplete: 'assets/audio/level_complete.wav',
     bulletHit: 'assets/audio/bullethit.mp3',
@@ -248,6 +248,9 @@ const gameAudioVolumes = {
     bombFall: 0.1,     // Bomb falling sound volume
     planeExplosion: 0.2 // Plane explosion sound volume
 };
+
+// Sound settings
+let soundEnabled = true; // Global sound toggle
 
 // Trạng thái game
 let gameState = {

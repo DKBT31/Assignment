@@ -1130,7 +1130,7 @@ class GameEngine {
             detailBtn.id = 'detailBtn';
             detailBtn.textContent = '📚 XEM CHI TIẾT';
             detailBtn.onclick = () => this.viewDayDetail();
-            
+
             const buttonContainer = document.querySelector('.overlay-buttons');
             buttonContainer.insertBefore(detailBtn, buttonContainer.firstChild);
         }
@@ -1193,12 +1193,13 @@ class GameEngine {
     }
 
     playSound(soundName) {
-        if (!this.audioEnabled) return;
+        // Check both game engine audio state and global sound toggle
+        if (!this.audioEnabled || !soundEnabled) return;
 
         const audio = document.getElementById(soundName + 'Sound');
         if (audio) {
             audio.currentTime = 0;
-            
+
             // Use volume from gameAudioVolumes configuration
             if (typeof gameAudioVolumes !== 'undefined' && gameAudioVolumes[soundName]) {
                 audio.volume = gameAudioVolumes[soundName];
@@ -1212,7 +1213,7 @@ class GameEngine {
                     audio.volume = 0.4; // Default volume
                 }
             }
-            
+
             audio.play().catch(e => console.log('Cannot play sound:', e));
         }
     }
