@@ -276,20 +276,27 @@ function saveGameState() {
 
 // Helper functions for environment-aware navigation
 function getBasePath() {
-    // Check if we're in production (Vercel)
-    if (!window.location.hostname.includes('localhost') && !window.location.hostname.includes('127.0.0.1')) {
-        return ''; // Production - no prefix needed
+    const currentPath = window.location.pathname;
+    const hostname = window.location.hostname;
+    
+    // For Vercel production, we need to check where we are
+    if (!hostname.includes('localhost') && !hostname.includes('127.0.0.1')) {
+        // If we're at the root (index page) on Vercel, we still need the dien-bien-phu-game prefix
+        // because the game files are in that folder
+        if (currentPath === '/' || currentPath === '/index.html' || currentPath.endsWith('index.html')) {
+            return 'dien-bien-phu-game/';
+        }
+        // If we're already in a game page, no prefix needed
+        return '';
     }
     
-    // For local development, check if we're already inside the game folder
-    const currentPath = window.location.pathname;
-    
-    // If we're already in the dien-bien-phu-game folder (like /dien-bien-phu-game/game.html)
+    // For local development
+    // If we're already in the dien-bien-phu-game folder
     if (currentPath.includes('/dien-bien-phu-game/')) {
         return ''; // Already in subfolder, no prefix needed
     }
     
-    // If we're on the root or index page, we need the prefix
+    // If we're on the root or index page in local development, we need the prefix
     return 'dien-bien-phu-game/';
 }
 
