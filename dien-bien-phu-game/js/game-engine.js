@@ -609,6 +609,7 @@ class GameEngine {
                 // Damage defense when bomb hits ground
                 this.defenseHealth -= bomb.damage || 25;
                 this.createExplosion(bomb.x, this.height - 12);
+                this.playSound('explosion'); // Play bomb explosion sound
                 this.bombs.splice(index, 1);
 
                 // Check if defense is destroyed
@@ -814,6 +815,9 @@ class GameEngine {
             damage: enemy.bombDamage || 25,
             gravity: 0.15 // Gravity acceleration for realistic physics
         });
+
+        // Play bomb falling sound
+        this.playSound('bombFall');
     }
 
     dropPowerUp(x, y) {
@@ -913,6 +917,9 @@ class GameEngine {
                     enemy.health -= bullet.damage;
                     this.bullets.splice(bulletIndex, 1);
 
+                    // Play bullet hit sound
+                    this.playSound('bulletHit');
+
                     // Create hit effect
                     this.createHitEffect(enemy.x + enemy.width / 2, enemy.y + enemy.height / 2);
 
@@ -927,7 +934,7 @@ class GameEngine {
                         }
 
                         this.enemies.splice(enemyIndex, 1);
-                        this.playSound('explosion');
+                        this.playSound('planeExplosion'); // Use plane explosion sound
                     }
                 }
             });
@@ -940,6 +947,7 @@ class GameEngine {
                 const damage = this.activePowerUps.shield ? (bomb.damage || 25) * 0.5 : (bomb.damage || 25);
                 this.defenseHealth -= damage;
                 this.createExplosion(bomb.x, bomb.y);
+                this.playSound('explosion'); // Play bomb explosion sound
                 this.bombs.splice(bombIndex, 1);
 
                 if (this.defenseHealth <= 0) {
@@ -1190,6 +1198,21 @@ class GameEngine {
         const audio = document.getElementById(soundName + 'Sound');
         if (audio) {
             audio.currentTime = 0;
+            
+            // Use volume from gameAudioVolumes configuration
+            if (typeof gameAudioVolumes !== 'undefined' && gameAudioVolumes[soundName]) {
+                audio.volume = gameAudioVolumes[soundName];
+            } else {
+                // Fallback volume settings
+                if (soundName === 'shoot') {
+                    audio.volume = 0.3; // Gunshot volume
+                } else if (soundName === 'explosion') {
+                    audio.volume = 0.5; // Explosion volume
+                } else {
+                    audio.volume = 0.4; // Default volume
+                }
+            }
+            
             audio.play().catch(e => console.log('Cannot play sound:', e));
         }
     }

@@ -226,11 +226,27 @@ const gameConfig = {
 // Âm thanh cho game
 const gameAudio = {
     background: 'assets/audio/background.mp3',
-    shoot: 'assets/audio/shoot.wav',
-    explosion: 'assets/audio/explosion.wav',
+    shoot: 'assets/audio/fire.mp3',
+    explosion: 'assets/audio/explosion.mp3',
     powerUp: 'assets/audio/powerup.wav',
     victory: 'assets/audio/victory.wav',
-    levelComplete: 'assets/audio/level_complete.wav'
+    levelComplete: 'assets/audio/level_complete.wav',
+    bulletHit: 'assets/audio/bullethit.mp3',
+    bombFall: 'assets/audio/bombfall.mp3',
+    planeExplosion: 'assets/audio/explosion-plane.mp3'
+};
+
+// Volume settings for each sound (0.0 = silent, 1.0 = full volume)
+const gameAudioVolumes = {
+    background: 0.3,
+    shoot: 0.2,        // Gunshot volume - change this to your preference
+    explosion: 0.1,
+    powerUp: 0.4,
+    victory: 0.6,
+    levelComplete: 0.5,
+    bulletHit: 0.3,    // Bullet hit sound volume
+    bombFall: 0.1,     // Bomb falling sound volume
+    planeExplosion: 0.2 // Plane explosion sound volume
 };
 
 // Trạng thái game

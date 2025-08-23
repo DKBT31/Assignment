@@ -300,6 +300,7 @@ class GameEngine {
             // Remove bombs that hit ground
             if (bomb.y > this.height) {
                 this.createExplosion(bomb.x, bomb.y);
+                this.playSound('explosion'); // Play bomb explosion sound
                 this.bombs.splice(index, 1);
             }
         });
@@ -399,6 +400,9 @@ class GameEngine {
             height: 12,
             damage: 25
         });
+
+        // Play bomb falling sound
+        this.playSound('bombFall');
     }
 
     checkCollisions() {
@@ -412,6 +416,9 @@ class GameEngine {
                     enemy.health -= bullet.damage;
                     this.bullets.splice(bulletIndex, 1);
 
+                    // Play bullet hit sound
+                    this.playSound('bulletHit');
+
                     // Create hit effect
                     this.createHitEffect(enemy.x + enemy.width / 2, enemy.y + enemy.height / 2);
 
@@ -421,7 +428,7 @@ class GameEngine {
                         this.currentKills++;
                         this.createExplosion(enemy.x + enemy.width / 2, enemy.y + enemy.height / 2);
                         this.enemies.splice(enemyIndex, 1);
-                        this.playSound('explosion');
+                        this.playSound('planeExplosion'); // Use plane explosion sound
                     }
                 }
             });
@@ -433,6 +440,7 @@ class GameEngine {
                 if (this.checkCollision(bomb, house)) {
                     house.health -= bomb.damage;
                     this.createExplosion(bomb.x, bomb.y);
+                    this.playSound('explosion'); // Play bomb explosion sound
                     this.bombs.splice(bombIndex, 1);
 
                     if (house.health <= 0) {
@@ -448,6 +456,7 @@ class GameEngine {
             if (this.checkCollision(bomb, this.player)) {
                 this.player.health -= bomb.damage;
                 this.createExplosion(bomb.x, bomb.y);
+                this.playSound('explosion'); // Play bomb explosion sound
                 this.bombs.splice(bombIndex, 1);
 
                 if (this.player.health <= 0) {
