@@ -146,74 +146,187 @@ body {
 
 .overlay-content {
     background: linear-gradient(135deg, #2d5a3d, #1a472a);
-    padding: 15px;
-    border-radius: 15px;
+    padding: 25px;
+    border-radius: 20px;
     text-align: center;
-    border: 2px solid #ffd700;
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
-    max-width: 90vw;
-    width: 100%;
+    border: 3px solid #ffd700;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+    max-width: 500px;
+    width: 90vw;
     max-height: 95vh;
     overflow-y: auto;
+    min-height: 300px;
 }
 
 .overlay-content h2 {
     color: #ffd700;
-    font-size: 2rem;
-    margin-bottom: 15px;
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .overlay-content p {
     color: #e8f5e8;
-    font-size: 1.1rem;
-    margin-bottom: 25px;
-    line-height: 1.5;
+    font-size: 1.3rem;
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+/* Enhanced completion styles */
+.completion-content {
+    padding: 15px 0;
+}
+
+.completion-congrats {
+    font-size: 1.6rem !important;
+    font-weight: bold;
+    color: #90ee90 !important;
+    margin-bottom: 25px !important;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.completion-stats {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 15px;
+    padding: 20px;
+    margin: 20px 0;
+    border: 1px solid rgba(255, 215, 0, 0.3);
+}
+
+.stat-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 12px 0;
+    font-size: 1.4rem;
+    padding: 8px 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+}
+
+.stat-label {
+    color: #e8f5e8;
+    font-weight: 500;
+}
+
+.stat-value {
+    color: #ffd700;
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.completion-next {
+    font-size: 1.4rem !important;
+    color: #90ee90 !important;
+    font-weight: bold;
+    margin-top: 20px !important;
+    padding: 15px;
+    background: rgba(0, 255, 0, 0.1);
+    border-radius: 10px;
+    border: 1px solid rgba(144, 238, 144, 0.3);
 }
 
 .overlay-buttons {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    gap: 8px;
-    margin-top: 10px;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 20px;
+    flex-wrap: wrap;
 }
 
 .overlay-buttons button {
     background: linear-gradient(45deg, #ff6b35, #f7931e);
     color: white;
     border: none;
-    padding: 6px 12px;
-    font-size: 0.85rem;
+    padding: 12px 18px;
+    font-size: 1rem;
     font-weight: 600;
-    border-radius: 15px;
+    border-radius: 20px;
     cursor: pointer;
     transition: all 0.3s ease;
     text-transform: uppercase;
-    letter-spacing: 0.3px;
-    flex: 1;
-    max-width: 140px;
+    letter-spacing: 0.5px;
+    min-width: 140px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 .overlay-buttons button:hover {
     background: linear-gradient(45deg, #f7931e, #ff6b35);
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(255, 107, 53, 0.4);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(255, 107, 53, 0.4);
 }
 
+/* Detail button (first button) */
+.overlay-buttons button:first-child {
+    background: linear-gradient(45deg, #2196f3, #1976d2);
+}
+
+.overlay-buttons button:first-child:hover {
+    background: linear-gradient(45deg, #1976d2, #2196f3);
+    box-shadow: 0 8px 20px rgba(33, 150, 243, 0.4);
+}
+
+/* Home button */
 .overlay-buttons button:nth-child(2) {
     background: linear-gradient(45deg, #4caf50, #45a049);
 }
 
 .overlay-buttons button:nth-child(2):hover {
     background: linear-gradient(45deg, #45a049, #4caf50);
+    box-shadow: 0 8px 20px rgba(76, 175, 80, 0.4);
 }
 
+/* Continue button */
 .overlay-buttons button:nth-child(3) {
     background: linear-gradient(45deg, #757575, #616161);
 }
 
 .overlay-buttons button:nth-child(3):hover {
     background: linear-gradient(45deg, #616161, #757575);
+    box-shadow: 0 8px 20px rgba(117, 117, 117, 0.4);
+}
+
+/* Responsive overlay for mobile */
+@media (max-width: 768px) {
+    .overlay-content {
+        padding: 20px;
+        margin: 10px;
+        max-width: 95vw;
+    }
+
+    .overlay-content h2 {
+        font-size: 2rem;
+    }
+
+    .completion-congrats {
+        font-size: 1.4rem !important;
+    }
+
+    .stat-item {
+        font-size: 1.2rem;
+        padding: 6px 12px;
+    }
+
+    .stat-value {
+        font-size: 1.3rem;
+    }
+
+    .completion-next {
+        font-size: 1.2rem !important;
+    }
+
+    .overlay-buttons {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .overlay-buttons button {
+        min-width: auto;
+        width: 100%;
+        padding: 14px 20px;
+        font-size: 1.1rem;
+    }
 }
 
 /* Historical Completion Screen */

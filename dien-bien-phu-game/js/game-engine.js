@@ -1110,9 +1110,21 @@ class GameEngine {
             `;
         }
 
-        // Setup navigation buttons in order: CHƠI LẠI | VỀ TRANG CHỦ | TIẾP THEO
+        // Setup navigation buttons in order: CHI TIẾT | CHƠI LẠI | VỀ TRANG CHỦ | TIẾP THEO
         const continueBtn = document.getElementById('continueBtn');
         const homeBtn = document.getElementById('homeBtn');
+
+        // Add detail button if not already present
+        let detailBtn = document.getElementById('detailBtn');
+        if (!detailBtn) {
+            detailBtn = document.createElement('button');
+            detailBtn.id = 'detailBtn';
+            detailBtn.textContent = '📚 XEM CHI TIẾT';
+            detailBtn.onclick = () => this.viewDayDetail();
+            
+            const buttonContainer = document.querySelector('.overlay-buttons');
+            buttonContainer.insertBefore(detailBtn, buttonContainer.firstChild);
+        }
 
         // Left button - CHƠI LẠI (restart)
         restartBtn.style.display = 'inline-block';
@@ -1133,6 +1145,11 @@ class GameEngine {
         }
 
         overlay.classList.remove('hidden');
+    }
+
+    viewDayDetail() {
+        // Navigate to the detail page for the current day
+        window.location.href = `details/day${this.currentLevel}.html`;
     }
 
     showGameOver(reason) {

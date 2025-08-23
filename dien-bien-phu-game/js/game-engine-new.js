@@ -565,14 +565,44 @@ class GameEngine {
 
         title.textContent = '🎉 Hoàn thành màn chơi!';
         message.innerHTML = `
-            <p>Chúc mừng! Bạn đã hoàn thành ngày ${this.currentLevel}</p>
-            <p>Điểm số: ${this.score}</p>
-            <p>Máy bay tiêu diệt: ${this.currentKills}/${this.targetKills}</p>
-            <p>Nhà dân bảo vệ: ${aliveHouses}/${totalHouses}</p>
-            ${this.currentLevel < 12 ? '<p>Màn tiếp theo đã mở khóa!</p>' : '<p>🏆 Bạn đã hoàn thành tất cả 12 ngày!</p>'}
+            <div class="completion-content">
+                <p class="completion-congrats">Chúc mừng! Bạn đã hoàn thành ngày ${this.currentLevel}</p>
+                <div class="completion-stats">
+                    <div class="stat-item">
+                        <span class="stat-label">Điểm số:</span>
+                        <span class="stat-value">${this.score}</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Máy bay tiêu diệt:</span>
+                        <span class="stat-value">${this.currentKills}/${this.targetKills}</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Nhà dân bảo vệ:</span>
+                        <span class="stat-value">${aliveHouses}/${totalHouses}</span>
+                    </div>
+                </div>
+                <p class="completion-next">${this.currentLevel < 12 ? '🎯 Màn tiếp theo đã mở khóa!' : '🏆 Bạn đã hoàn thành tất cả 12 ngày!'}</p>
+            </div>
         `;
 
+        // Add detail button if not already present
+        let detailBtn = document.getElementById('detailBtn');
+        if (!detailBtn) {
+            detailBtn = document.createElement('button');
+            detailBtn.id = 'detailBtn';
+            detailBtn.textContent = '📚 Xem chi tiết lịch sử';
+            detailBtn.onclick = () => this.viewDayDetail();
+            
+            const buttonContainer = document.querySelector('.overlay-buttons');
+            buttonContainer.insertBefore(detailBtn, buttonContainer.firstChild);
+        }
+
         overlay.classList.remove('hidden');
+    }
+
+    viewDayDetail() {
+        // Navigate to the detail page for the current day
+        window.location.href = `details/day${this.currentLevel}.html`;
     }
 
     showGameOver(reason) {
