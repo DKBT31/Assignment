@@ -3,7 +3,8 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Game Điện Biên Phủ - Màn Chơi</title>
     <link rel="stylesheet" href="css/game.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -31,6 +32,14 @@
         <!-- Khung game chính -->
         <div class="game-area">
             <canvas id="gameCanvas"></canvas>
+
+            <!-- Mobile Control Buttons (outside header structure) -->
+            <div class="mobile-controls">
+                <button class="mobile-pause-btn" onclick="togglePause()">⏸️</button>
+                <button class="mobile-sound-btn" onclick="toggleSound()">
+                    <span id="mobileSoundIcon">🔊</span>
+                </button>
+            </div>
 
             <!-- Overlay cho pause/game over -->
             <div id="gameOverlay" class="overlay hidden">
@@ -72,11 +81,6 @@
         <div class="controls-info">
             <h4>Điều khiển:</h4>
             <p>🖱️ Di chuyển chuột để nhắm | Click để bắn | SPACE để pause</p>
-        </div>
-
-        <!-- Sound toggle button -->
-        <div class="sound-toggle" id="soundToggle" onclick="toggleSound()">
-            <span id="soundIcon">🔊</span>
         </div>
     </div>
 

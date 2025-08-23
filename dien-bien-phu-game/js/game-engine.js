@@ -69,11 +69,11 @@ class GameEngine {
     setupResponsiveCanvas() {
         // Get the container dimensions
         const container = this.canvas.parentElement;
-        
+
         // Mobile-specific detection
         const isMobile = window.innerWidth <= 768;
         const isLandscape = window.innerWidth > window.innerHeight;
-        
+
         // Calculate available space accounting for UI elements
         let headerHeight = 0;
         if (isMobile && isLandscape && window.innerHeight <= 500) {
@@ -82,7 +82,7 @@ class GameEngine {
         } else {
             headerHeight = document.querySelector('.game-header')?.offsetHeight || 60;
         }
-        
+
         const availableWidth = window.innerWidth;
         const availableHeight = window.innerHeight - headerHeight;
 
@@ -91,17 +91,17 @@ class GameEngine {
         const screenAspectRatio = availableWidth / availableHeight;
 
         let canvasWidth, canvasHeight;
-        
+
         if (isMobile) {
             if (isLandscape) {
                 // Landscape mobile - very conservative sizing to prevent cropping
                 const maxWidth = availableWidth * 0.88;
                 const maxHeight = availableHeight * 0.80; // Very conservative
-                
+
                 // Calculate based on aspect ratio with reasonable limits
                 canvasWidth = Math.min(maxWidth, maxHeight * gameAspectRatio);
                 canvasHeight = canvasWidth / gameAspectRatio;
-                
+
                 // Double-check height constraint
                 if (canvasHeight > maxHeight) {
                     canvasHeight = maxHeight;
@@ -111,11 +111,11 @@ class GameEngine {
                 // Portrait mobile - very conservative sizing to prevent bottom cropping
                 const maxWidth = availableWidth * 0.90;
                 const maxHeight = availableHeight * 0.70; // Very conservative for portrait
-                
+
                 // Start with width-based sizing
                 canvasWidth = maxWidth;
                 canvasHeight = canvasWidth / gameAspectRatio;
-                
+
                 // If height exceeds limit, constrain by height instead
                 if (canvasHeight > maxHeight) {
                     canvasHeight = maxHeight;
@@ -136,7 +136,7 @@ class GameEngine {
         // Ensure minimum sizes but optimize for mobile
         const minWidth = isMobile ? 280 : 320;
         const minHeight = isMobile ? 150 : 180;
-        
+
         canvasWidth = Math.max(minWidth, canvasWidth);
         canvasHeight = Math.max(minHeight, canvasHeight);
 
@@ -155,7 +155,7 @@ class GameEngine {
         // Update dimensions
         this.width = this.baseWidth;
         this.height = this.baseHeight;
-        
+
         // Store mobile state for other optimizations
         this.isMobile = isMobile;
         this.isLandscape = isLandscape;
@@ -329,7 +329,7 @@ class GameEngine {
 
         // Calculate angle and apply constraints (gun can only aim upward)
         let angle = Math.atan2(dy, dx);
-        
+
         // Limit aiming angle (only shoot upward)
         if (angle > -Math.PI / 6) angle = -Math.PI / 6; // Not more than 30 degrees right
         if (angle < -Math.PI + Math.PI / 6) angle = -Math.PI + Math.PI / 6; // Not more than 30 degrees left
