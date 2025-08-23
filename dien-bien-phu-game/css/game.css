@@ -146,12 +146,15 @@ body {
 
 .overlay-content {
     background: linear-gradient(135deg, #2d5a3d, #1a472a);
-    padding: 40px;
-    border-radius: 20px;
+    padding: 15px;
+    border-radius: 15px;
     text-align: center;
-    border: 3px solid #ffd700;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
-    max-width: 400px;
+    border: 2px solid #ffd700;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
+    max-width: 90vw;
+    width: 100%;
+    max-height: 95vh;
+    overflow-y: auto;
 }
 
 .overlay-content h2 {
@@ -169,22 +172,26 @@ body {
 
 .overlay-buttons {
     display: flex;
-    flex-direction: column;
-    gap: 15px;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 8px;
+    margin-top: 10px;
 }
 
 .overlay-buttons button {
     background: linear-gradient(45deg, #ff6b35, #f7931e);
     color: white;
     border: none;
-    padding: 15px 25px;
-    font-size: 1.1rem;
+    padding: 6px 12px;
+    font-size: 0.85rem;
     font-weight: 600;
-    border-radius: 25px;
+    border-radius: 15px;
     cursor: pointer;
     transition: all 0.3s ease;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 0.3px;
+    flex: 1;
+    max-width: 140px;
 }
 
 .overlay-buttons button:hover {
@@ -207,6 +214,87 @@ body {
 
 .overlay-buttons button:nth-child(3):hover {
     background: linear-gradient(45deg, #616161, #757575);
+}
+
+/* Historical Completion Screen */
+.historical-completion {
+    text-align: left;
+    max-width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+}
+
+.historical-completion h2 {
+    font-family: 'Roboto Slab', serif;
+    text-align: center;
+    margin-bottom: 2px;
+    grid-column: 1 / -1;
+}
+
+.historical-completion .content-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin: 6px 0;
+}
+
+.historical-completion .full-width {
+    grid-column: 1 / -1;
+}
+
+.historical-completion h4 {
+    margin: 0 0 4px 0;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.historical-completion p {
+    margin: 0 0 4px 0;
+    line-height: 1.2;
+}
+
+.historical-completion blockquote {
+    font-family: 'Roboto Slab', serif;
+    margin: 6px 0;
+    font-size: 12px;
+    grid-column: 1 / -1;
+}
+
+.historical-completion blockquote p {
+    margin: 0;
+}
+
+/* Responsive design for historical completion */
+@media (max-width: 768px) {
+    .historical-completion .content-grid {
+        grid-template-columns: 1fr;
+        gap: 6px;
+    }
+
+    .overlay-content {
+        padding: 10px;
+        max-width: 95vw;
+    }
+
+    .overlay-buttons {
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .overlay-buttons button {
+        max-width: none;
+        padding: 8px 12px;
+        font-size: 0.8rem;
+    }
+}
+
+@media (min-width: 1200px) {
+    .overlay-content {
+        max-width: 1000px;
+    }
 }
 
 /* History Panel */
@@ -555,8 +643,9 @@ body {
     }
 
     .overlay-content {
-        margin: 20px;
-        padding: 30px 20px;
+        margin: 10px;
+        padding: 20px 15px;
+        max-width: 95vw;
     }
 
     .power-up-indicator {

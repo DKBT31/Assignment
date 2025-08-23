@@ -271,7 +271,7 @@ function playAgain() {
 }
 
 function shareAchievement() {
-    const text = `Tôi vừa hoàn thành game "Chiến thắng Điện Biên Phủ trên không"! 🏆 #DieBienPhu #LichSu`;
+    const text = `Tôi vừa hoàn thành chiến dịch "Điện Biên Phủ trên không" - 12 ngày đêm lịch sử! 🏆 #DieBienPhu #LichSu #Vietnam1972`;
 
     if (navigator.share) {
         navigator.share({

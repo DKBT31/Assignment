@@ -1048,28 +1048,89 @@ class GameEngine {
         const message = document.getElementById('overlayMessage');
         const restartBtn = document.getElementById('restartBtn');
 
-        const defenseHealthPercent = Math.round((this.defenseHealth / this.maxDefenseHealth) * 100);
+        // Get historical data for this level
+        const levelData = historicalData.find(data => data.id === this.currentLevel);
 
-        title.textContent = '🎉 Hoàn thành màn chơi!';
-        message.innerHTML = `
-            <p>Chúc mừng! Bạn đã hoàn thành ngày ${this.currentLevel}</p>
-            <p>Máy bay tiêu diệt: ${this.currentKills}/${this.targetKills}</p>
-            <p>Sức khỏe phòng thủ: ${defenseHealthPercent}%</p>
-            ${this.currentLevel < 12 ? '<p>Màn tiếp theo đã mở khóa!</p>' : '<p>🏆 Bạn đã hoàn thành tất cả 12 ngày!</p>'}
-        `;
-
-        // Thay đổi nút "Tiếp tục" thành "Màn tiếp theo" hoặc "Về trang chủ"
-        const continueBtn = document.getElementById('continueBtn');
-        if (this.currentLevel < 12) {
-            continueBtn.textContent = 'Màn tiếp theo';
-            continueBtn.onclick = () => nextLevel();
+        if (!levelData) {
+            // Fallback if no historical data found
+            title.textContent = '🎉 Hoàn thành màn chơi!';
+            message.innerHTML = `<p>Chúc mừng! Bạn đã hoàn thành ngày ${this.currentLevel}</p>`;
         } else {
-            continueBtn.textContent = 'Về trang chủ';
-            continueBtn.onclick = () => goHome();
+            // Display historical content
+            title.innerHTML = `
+                <div style="background: #d32f2f; color: white; border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; margin: 0 auto 5px; font-size: 16px; font-weight: bold;">
+                    ${this.currentLevel}
+                </div>
+            `;
+
+            message.innerHTML = `
+                <div class="historical-completion">
+                    <h2 style="color: #fff; margin-bottom: 2px; font-size: 18px; font-weight: 600;">${levelData.title}</h2>
+                    <p style="color: #ccc; margin-bottom: 6px; font-size: 14px; text-align: center;">${levelData.date}</p>
+                    
+                    <div class="content-grid">
+                        <div style="background: rgba(139, 69, 19, 0.8); padding: 8px; border-radius: 4px;">
+                            <h4 style="color: #ffab40; margin-bottom: 4px; font-size: 13px; font-weight: 600;">🎯 Tổn thất Mỹ</h4>
+                            <p style="color: #ffab40; font-weight: bold; font-size: 18px; margin: 0;">
+                                ${this.currentKills} máy bay bị bắn rơi
+                            </p>
+                            <p style="color: #ffcc80; font-size: 12px; margin-top: 2px;">
+                                Mục tiêu: ${this.targetKills} máy bay
+                            </p>
+                        </div>
+                        
+                        <div style="background: rgba(27, 94, 32, 0.8); padding: 8px; border-radius: 4px;">
+                            <h4 style="color: #81c784; margin-bottom: 4px; font-size: 13px; font-weight: 600;">🏆 Ý nghĩa lịch sử</h4>
+                            <p style="color: #a5d6a7; font-size: 12px; line-height: 1.3; margin: 0;">
+                                ${levelData.significance}
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div style="background: rgba(69, 90, 100, 0.6); padding: 8px; border-radius: 4px; margin-bottom: 6px;" class="full-width">
+                        <h4 style="color: #90caf9; margin-bottom: 4px; font-size: 13px; font-weight: 600;">📖 Diễn biến chi tiết</h4>
+                        <p style="color: #b0bec5; font-size: 12px; line-height: 1.4; margin: 0;">
+                            ${levelData.description}
+                        </p>
+                    </div>
+                    
+                    <blockquote style="border-left: 2px solid #d32f2f; padding-left: 6px; margin: 4px 0; background: rgba(0,0,0,0.3); padding: 6px; border-radius: 3px;" class="full-width">
+                        <p style="color: #fff; font-style: italic; margin: 0; font-size: 13px; text-align: center; font-weight: 500;">
+                            "${levelData.historicalQuote}"
+                        </p>
+                    </blockquote>
+                    
+                    <div class="full-width" style="text-align: center; margin-top: 6px;">
+                        ${this.currentLevel < 12 ?
+                    '<p style="color: #4caf50; font-weight: bold; font-size: 14px; margin: 0;">✅ Ngày tiếp theo đã mở khóa!</p>' :
+                    '<p style="color: #ffd700; font-weight: bold; font-size: 14px; margin: 0;">🏆 Hoàn thành chiến dịch "Điện Biên Phủ trên không"!</p>'
+                }
+                    </div>
+                </div>
+            `;
         }
 
-        // Show the restart button in success case (so players can replay the level)
+        // Setup navigation buttons in order: CHƠI LẠI | VỀ TRANG CHỦ | TIẾP THEO
+        const continueBtn = document.getElementById('continueBtn');
+        const homeBtn = document.getElementById('homeBtn');
+
+        // Left button - CHƠI LẠI (restart)
         restartBtn.style.display = 'inline-block';
+        restartBtn.textContent = 'CHƠI LẠI';
+
+        // Middle button - VỀ TRANG CHỦ (home)
+        homeBtn.style.display = 'inline-block';
+        homeBtn.textContent = 'VỀ TRANG CHỦ';
+
+        // Right button - TIẾP THEO (next level) or hide if last level
+        if (this.currentLevel < 12) {
+            continueBtn.textContent = 'TIẾP THEO';
+            continueBtn.onclick = () => nextLevel();
+            continueBtn.style.display = 'inline-block';
+        } else {
+            // Hide the continue button on the last level since we already have home button
+            continueBtn.style.display = 'none';
+        }
 
         overlay.classList.remove('hidden');
     }

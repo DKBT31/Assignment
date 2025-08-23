@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ngày 4 - Chi Tiết | Điện Biên Phủ Trên Không</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/detail.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="detail-container">
+        <header class="detail-header">
+            <div class="container">
+                <div class="back-navigation">
+                    <button onclick="goBack()" class="back-btn"> Quay lại</button>
+                    <button onclick="goHome()" class="home-btn"> Trang chủ</button>
+                </div>
+                <h1 class="detail-title">Ngày 4 - 12/17/1972 00:00:00.AddDays(4).ToString("dd/MM/yyyy")</h1>
+                <h2 class="detail-subtitle">Tiếp tục cuộc chiến trên không</h2>
+            </div>
+        </header>
+
+        <main class="detail-content">
+            <div class="container">
+                <div class="content-grid">
+                    <div class="main-content">
+                        <div id="custom-content" class="content-section">
+                            <h3>Nội dung chi tiết</h3>
+                            <p class="placeholder-text">
+                                <em>Nội dung chi tiết sẽ được cập nhật khi bạn gửi thông tin...</em>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="sidebar">
+                        <div class="info-box">
+                            <h4>Thông tin cơ bản</h4>
+                            <div class="info-item">
+                                <strong>Ngày:</strong> 12/17/1972 00:00:00.AddDays(4).ToString("dd/MM/yyyy")
+                            </div>
+                            <div class="info-item">
+                                <strong>Thời gian:</strong> 12 tiếng
+                            </div>
+                            <div class="info-item">
+                                <strong>Khu vực:</strong> Hà Nội
+                            </div>
+                        </div>
+
+                        <div class="navigation-box">
+                            <h4>Điều hướng</h4>
+                            <button onclick="playDay(4)" class="play-btn"> Chơi lại ngày này</button>
+                            <button onclick="viewDay(3)" class="prev-btn"> Ngày trước</button>
+                            <button onclick="viewDay(5)" class="next-btn"> Ngày tiếp theo</button>
+                            <button onclick="viewAllDays()" class="overview-btn"> Xem tất cả</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/data.js"></script>
+    <script src="../js/detail.js"></script>
+</body>
+</html>
