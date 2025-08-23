@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Game Điện Biên Phủ - Màn Chơi</title>
     <link rel="stylesheet" href="css/game.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -21,14 +21,6 @@
             </div>
             <div class="game-stats">
                 <div class="stat">
-                    <span class="label">Điểm:</span>
-                    <span id="score">0</span>
-                </div>
-                <div class="stat">
-                    <span class="label">Mạng:</span>
-                    <span id="lives">3</span>
-                </div>
-                <div class="stat">
                     <span class="label">Mục tiêu:</span>
                     <span id="objective">Tiêu diệt 10 máy bay</span>
                 </div>
@@ -38,7 +30,7 @@
 
         <!-- Khung game chính -->
         <div class="game-area">
-            <canvas id="gameCanvas" width="800" height="600"></canvas>
+            <canvas id="gameCanvas"></canvas>
 
             <!-- Overlay cho pause/game over -->
             <div id="gameOverlay" class="overlay hidden">
@@ -46,9 +38,9 @@
                     <h2 id="overlayTitle">Game Paused</h2>
                     <p id="overlayMessage">Nhấn tiếp tục để chơi</p>
                     <div class="overlay-buttons">
-                        <button id="continueBtn" onclick="resumeGame()">Tiếp tục</button>
                         <button id="restartBtn" onclick="restartLevel()">Chơi lại</button>
                         <button id="homeBtn" onclick="goHome()">Về trang chủ</button>
+                        <button id="continueBtn" onclick="resumeGame()">Tiếp tục</button>
                     </div>
                 </div>
             </div>
@@ -81,23 +73,37 @@
             <h4>Điều khiển:</h4>
             <p>🖱️ Di chuyển chuột để nhắm | Click để bắn | SPACE để pause</p>
         </div>
+
+        <!-- Sound toggle button -->
+        <div class="sound-toggle" id="soundToggle" onclick="toggleSound()">
+            <span id="soundIcon">🔊</span>
+        </div>
     </div>
 
     <!-- Audio elements -->
     <audio id="gameMusic" loop>
         <source src="assets/audio/game_music.mp3" type="audio/mpeg">
     </audio>
-    <audio id="shootSound">
-        <source src="assets/audio/shoot.wav" type="audio/wav">
+    <audio id="shootSound" volume="0.3">
+        <source src="assets/audio/fire.mp3" type="audio/mpeg">
     </audio>
     <audio id="explosionSound">
-        <source src="assets/audio/explosion.wav" type="audio/wav">
+        <source src="assets/audio/explosion.mp3" type="audio/mpeg">
     </audio>
     <audio id="powerUpSound">
-        <source src="assets/audio/powerup.wav" type="audio/wav">
+        <source src="assets/audio/powerup.mp3" type="audio/mpeg">
     </audio>
     <audio id="victorySound">
         <source src="assets/audio/victory.wav" type="audio/wav">
+    </audio>
+    <audio id="bulletHitSound" volume="0.4">
+        <source src="assets/audio/bullethit.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="bombFallSound" volume="0.4">
+        <source src="assets/audio/bombfall.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="planeExplosionSound" volume="0.4">
+        <source src="assets/audio/explosion-plane.mp3" type="audio/mpeg">
     </audio>
 
     <script src="js/data.js"></script>

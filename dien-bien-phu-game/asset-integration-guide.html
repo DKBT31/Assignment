@@ -109,7 +109,7 @@
             <h2>📂 1. Background Image (Hình nền)</h2>
             <div class="file-info">
                 <strong>File cần tạo:</strong> <code>assets/images/background.png</code><br>
-                <strong>Kích thước khuyến nghị:</strong> 800x600 pixels<br>
+                <strong>Kích thước khuyến nghị:</strong> 1400x800 pixels<br>
                 <strong>Mô tả:</strong> Hình nền chiến trường Điện Biên Phủ
             </div>
             <div class="instructions">
@@ -125,19 +125,15 @@
             <h2>✈️ 2. Aircraft Sprite (Hình máy bay)</h2>
             <div class="file-info">
                 <strong>File cần tạo:</strong> <code>assets/images/aircraft.png</code><br>
-                <strong>Kích thước khuyến nghị:</strong> 120x36 pixels (hoặc 160x48)<br>
-                <strong>Kích thước game gốc:</strong> 80x30 pixels<br>
-                <strong>Scaling tự động:</strong> 1.5× rộng, 1.2× cao để tránh bị méo<br>
-                <strong>Mô tả:</strong> Sprite máy bay địch với tỷ lệ tự nhiên hơn
+                <strong>Kích thước khuyến nghị:</strong> 80x32 pixels<br>
+                <strong>Mô tả:</strong> Sprite máy bay địch (sẽ tự động lật theo hướng bay)
             </div>
             <div class="instructions">
-                <strong>⚠️ Quan trọng:</strong> Thiết kế máy bay với tỷ lệ tự nhiên. Game sẽ tự động scale để phù hợp
-                với hitbox.<br>
-                <strong>Hướng:</strong> Máy bay hướng về bên phải trong file PNG.<br>
-                <strong>Lưu ý:</strong> Game tự động lật hình theo hướng bay.
+                <strong>Cách sử dụng:</strong> Game sẽ tự động lật hình để máy bay bay đúng hướng. Thiết kế máy bay
+                hướng về bên phải.
             </div>
             <div class="preview-area">
-                Sprite máy bay tùy chỉnh với tỷ lệ đẹp hơn
+                Sprite máy bay tùy chỉnh sẽ hiển thị ở đây
             </div>
         </div>
 
@@ -145,18 +141,15 @@
             <h2>🔫 3. Gun Body (Thân pháo)</h2>
             <div class="file-info">
                 <strong>File cần tạo:</strong> <code>assets/images/gun-body.png</code><br>
-                <strong>Kích thước khuyến nghị:</strong> Kích thước tự nhiên (không cố định)<br>
-                <strong>Scaling tự động:</strong> 2.0x (gấp đôi kích thước gốc)<br>
-                <strong>Anchor point:</strong> Trung tâm sprite (pivot rotation)<br>
-                <strong>Mô tả:</strong> Thân pháo phòng không được scale tương đối
+                <strong>Kích thước khuyến nghị:</strong> 60x40 pixels<br>
+                <strong>Mô tả:</strong> Thân pháo phòng không (phần đế và khung)
             </div>
             <div class="instructions">
-                <strong>Cải tiến:</strong> Scale theo tỷ lệ tự nhiên thay vì hardcode kích thước.<br>
-                <strong>Vị trí:</strong> Được vẽ ở trung tâm player với pivot point chính xác.<br>
-                <strong>Rotation:</strong> Anchor point luôn khớp với rotation axis.
+                <strong>Cách sử dụng:</strong> Thay thế phần thân pháo được vẽ bằng gradient. Nòng pháo sẽ được vẽ riêng
+                và có thể xoay.
             </div>
             <div class="preview-area">
-                Thân pháo tùy chỉnh với scaling tương đối 2.0x
+                Thân pháo tùy chỉnh sẽ hiển thị ở đây
             </div>
         </div>
 
@@ -164,18 +157,14 @@
             <h2>🎯 4. Gun Barrel (Nòng pháo)</h2>
             <div class="file-info">
                 <strong>File cần tạo:</strong> <code>assets/images/gun-barrel.png</code><br>
-                <strong>Kích thước khuyến nghị:</strong> Kích thước tự nhiên (không cố định)<br>
-                <strong>Scaling tự động:</strong> 1.5x (tăng 50% kích thước gốc)<br>
-                <strong>Anchor point:</strong> Base của barrel (gần pivot)<br>
-                <strong>Mô tả:</strong> Nòng pháo với scaling tương đối
+                <strong>Kích thước khuyến nghị:</strong> 40x12 pixels<br>
+                <strong>Mô tả:</strong> Nòng pháo (sẽ xoay theo mouse)
             </div>
             <div class="instructions">
-                <strong>Cải tiến:</strong> Scale theo tỷ lệ thay vì hardcode dimensions.<br>
-                <strong>Thiết kế:</strong> Nòng pháo nằm ngang hướng phải trong file PNG.<br>
-                <strong>Rotation:</strong> Pivot tại base (-5 offset) để rotation tự nhiên.
+                <strong>Cách sử dụng:</strong> Thiết kế nòng pháo nằm ngang. Game sẽ tự động xoay theo hướng ngắm.
             </div>
             <div class="preview-area">
-                Nòng pháo tùy chỉnh với scaling tương đối 1.5x
+                Nòng pháo tùy chỉnh sẽ hiển thị ở đây
             </div>
         </div>
 
@@ -200,32 +189,10 @@
                 <h3>Lưu ý kỹ thuật:</h3>
                 <ul>
                     <li>Sử dụng định dạng PNG để có nền trong suốt</li>
-                    <li>Kích thước có thể điều chỉnh - game scale tương đối</li>
-                    <li>Pivot points được tính toán tự động</li>
+                    <li>Kích thước có thể điều chỉnh nhưng nên giữ tỷ lệ</li>
+                    <li>Hình ảnh sẽ được scale tự động</li>
                     <li>Game sẽ fallback về graphics cũ nếu không tìm thấy file</li>
                 </ul>
-            </div>
-        </div>
-
-        <div class="asset-section">
-            <h2>⚙️ Scaling System Mới</h2>
-            <div class="instructions">
-                <strong>Cải tiến quan trọng:</strong> Hệ thống scaling đã được thiết kế lại để đảm bảo pivot points
-                chính xác:<br><br>
-
-                <strong>🎯 Gun Body Scaling:</strong><br>
-                • Scale factor: 2.0x (gấp đôi kích thước tự nhiên)<br>
-                • Anchor point: Trung tâm sprite<br>
-                • Rotation: Quanh center của player<br><br>
-
-                <strong>🎯 Gun Barrel Scaling:</strong><br>
-                • Scale factor: 1.5x (tăng 50%)<br>
-                • Anchor point: Base của barrel (offset -5px)<br>
-                • Rotation: Quanh pivot chính xác<br><br>
-
-                <strong>🔧 Muzzle Flash:</strong><br>
-                • Tự động tính toán vị trí dựa trên barrel length thực tế<br>
-                • Khớp với kích thước barrel đã scale<br>
             </div>
         </div>
 
@@ -234,8 +201,6 @@
             <ul>
                 <li>✅ Hệ thống load ảnh bất đồng bộ</li>
                 <li>✅ Fallback tự động nếu ảnh không load được</li>
-                <li>✅ Scaling tương đối thay vì hardcode dimensions</li>
-                <li>✅ Pivot points chính xác cho rotation mượt mà</li>
                 <li>✅ Tự động flip máy bay theo hướng bay</li>
                 <li>✅ Giữ nguyên hiệu ứng muzzle flash và particles</li>
                 <li>✅ Tương thích với hệ thống xoay nòng pháo</li>
@@ -245,7 +210,7 @@
 
         <div style="text-align: center; margin-top: 30px; padding: 20px; background: #e8f5e8; border-radius: 8px;">
             <strong>🚀 Ready to upgrade your game graphics!</strong><br>
-            <small>Hệ thống scaling mới đảm bảo graphics luôn khớp với rotation mechanics</small>
+            <small>Sau khi thêm assets, refresh game để thấy thay đổi</small>
         </div>
     </div>
 </body>

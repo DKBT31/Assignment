@@ -300,6 +300,7 @@ class GameEngine {
             // Remove bombs that hit ground
             if (bomb.y > this.height) {
                 this.createExplosion(bomb.x, bomb.y);
+                this.playSound('explosion'); // Play bomb explosion sound
                 this.bombs.splice(index, 1);
             }
         });
@@ -399,6 +400,9 @@ class GameEngine {
             height: 12,
             damage: 25
         });
+
+        // Play bomb falling sound
+        this.playSound('bombFall');
     }
 
     checkCollisions() {
@@ -412,6 +416,9 @@ class GameEngine {
                     enemy.health -= bullet.damage;
                     this.bullets.splice(bulletIndex, 1);
 
+                    // Play bullet hit sound
+                    this.playSound('bulletHit');
+
                     // Create hit effect
                     this.createHitEffect(enemy.x + enemy.width / 2, enemy.y + enemy.height / 2);
 
@@ -421,7 +428,7 @@ class GameEngine {
                         this.currentKills++;
                         this.createExplosion(enemy.x + enemy.width / 2, enemy.y + enemy.height / 2);
                         this.enemies.splice(enemyIndex, 1);
-                        this.playSound('explosion');
+                        this.playSound('planeExplosion'); // Use plane explosion sound
                     }
                 }
             });
@@ -433,6 +440,7 @@ class GameEngine {
                 if (this.checkCollision(bomb, house)) {
                     house.health -= bomb.damage;
                     this.createExplosion(bomb.x, bomb.y);
+                    this.playSound('explosion'); // Play bomb explosion sound
                     this.bombs.splice(bombIndex, 1);
 
                     if (house.health <= 0) {
@@ -448,6 +456,7 @@ class GameEngine {
             if (this.checkCollision(bomb, this.player)) {
                 this.player.health -= bomb.damage;
                 this.createExplosion(bomb.x, bomb.y);
+                this.playSound('explosion'); // Play bomb explosion sound
                 this.bombs.splice(bombIndex, 1);
 
                 if (this.player.health <= 0) {
@@ -565,14 +574,44 @@ class GameEngine {
 
         title.textContent = '🎉 Hoàn thành màn chơi!';
         message.innerHTML = `
-            <p>Chúc mừng! Bạn đã hoàn thành ngày ${this.currentLevel}</p>
-            <p>Điểm số: ${this.score}</p>
-            <p>Máy bay tiêu diệt: ${this.currentKills}/${this.targetKills}</p>
-            <p>Nhà dân bảo vệ: ${aliveHouses}/${totalHouses}</p>
-            ${this.currentLevel < 12 ? '<p>Màn tiếp theo đã mở khóa!</p>' : '<p>🏆 Bạn đã hoàn thành tất cả 12 ngày!</p>'}
+            <div class="completion-content">
+                <p class="completion-congrats">Chúc mừng! Bạn đã hoàn thành ngày ${this.currentLevel}</p>
+                <div class="completion-stats">
+                    <div class="stat-item">
+                        <span class="stat-label">Điểm số:</span>
+                        <span class="stat-value">${this.score}</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Máy bay tiêu diệt:</span>
+                        <span class="stat-value">${this.currentKills}/${this.targetKills}</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Nhà dân bảo vệ:</span>
+                        <span class="stat-value">${aliveHouses}/${totalHouses}</span>
+                    </div>
+                </div>
+                <p class="completion-next">${this.currentLevel < 12 ? '🎯 Màn tiếp theo đã mở khóa!' : '🏆 Bạn đã hoàn thành tất cả 12 ngày!'}</p>
+            </div>
         `;
 
+        // Add detail button if not already present
+        let detailBtn = document.getElementById('detailBtn');
+        if (!detailBtn) {
+            detailBtn = document.createElement('button');
+            detailBtn.id = 'detailBtn';
+            detailBtn.textContent = '📚 Xem chi tiết lịch sử';
+            detailBtn.onclick = () => this.viewDayDetail();
+
+            const buttonContainer = document.querySelector('.overlay-buttons');
+            buttonContainer.insertBefore(detailBtn, buttonContainer.firstChild);
+        }
+
         overlay.classList.remove('hidden');
+    }
+
+    viewDayDetail() {
+        // Navigate to the detail page for the current day
+        window.location.href = `dien-bien-phu-game/details/day${this.currentLevel}.html`;
     }
 
     showGameOver(reason) {
@@ -597,7 +636,8 @@ class GameEngine {
     }
 
     playSound(soundName) {
-        if (!this.audioEnabled) return;
+        // Check both game engine audio state and global sound toggle
+        if (!this.audioEnabled || !soundEnabled) return;
 
         const audio = document.getElementById(soundName + 'Sound');
         if (audio) {

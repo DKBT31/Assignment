@@ -98,7 +98,9 @@ function setupAudio() {
 
     // Auto-play music when user interacts with the page
     document.addEventListener('click', function playMusic() {
-        gameMusic.play().catch(e => console.log('Cannot play music:', e));
+        if (soundEnabled) {
+            gameMusic.play().catch(e => console.log('Cannot play music:', e));
+        }
         document.removeEventListener('click', playMusic);
     }, { once: true });
 
@@ -136,32 +138,53 @@ function resumeGame() {
 function restartLevel() {
     if (!game) return;
 
-    game.loadLevel(currentLevel);
-    game.start();
-    hideOverlay();
+    // Use the same approach as playAgain() - reload the page with current level
+    // This ensures a complete clean restart just like the working "chơi lại" after game completion
+    window.location.href = `game.html?level=${currentLevel}`;
 }
 
 // Go to home page
 function goHome() {
-    window.location.href = 'index.html';
+    window.location.href = '../index.html';
 }
 
 // Go to next level
 function nextLevel() {
-    if (!game) return;
+    console.log('nextLevel() called, current level:', currentLevel);
+
+    if (!game) {
+        console.error('Game object not found!');
+        return;
+    }
 
     if (currentLevel < 12) {
         currentLevel++;
+        console.log('Moving to level:', currentLevel);
+
+        // Update the URL to reflect the new level
+        const newUrl = `game.html?level=${currentLevel}`;
+        window.history.pushState({ level: currentLevel }, '', newUrl);
+
+        // Load the new level
         game.loadLevel(currentLevel);
+        game.reset(); // Reset game state
         game.start();
         hideOverlay();
 
         // Reset nút "Tiếp tục" về trạng thái bình thường
         const continueBtn = document.getElementById('continueBtn');
-        continueBtn.textContent = 'Tiếp tục';
-        continueBtn.onclick = () => resumeGame();
+        if (continueBtn) {
+            continueBtn.textContent = 'Tiếp tục';
+            continueBtn.onclick = () => resumeGame();
+        }
+
+        // Update level display
+        updateLevelDisplay();
+
     } else {
-        goHome();
+        // All levels completed
+        console.log('All levels completed!');
+        showCompletionMessage();
     }
 }
 
@@ -188,17 +211,20 @@ function toggleHistory() {
     panel.classList.toggle('open');
 }
 
-// Navigation functions
-function nextLevel() {
-    if (currentLevel < 12) {
-        currentLevel++;
-        window.location.href = `game.html?level=${currentLevel}`;
-    } else {
-        // All levels completed
-        showCompletionMessage();
+// Update level display
+function updateLevelDisplay() {
+    const levelElement = document.getElementById('currentLevel');
+    if (levelElement) {
+        levelElement.textContent = currentLevel;
+    }
+
+    const titleElement = document.getElementById('levelTitle');
+    if (titleElement && historicalData[currentLevel - 1]) {
+        titleElement.textContent = historicalData[currentLevel - 1].title;
     }
 }
 
+// Navigation functions
 function previousLevel() {
     if (currentLevel > 1) {
         currentLevel--;
@@ -214,23 +240,25 @@ function showCompletionMessage() {
 
     title.textContent = '🏆 Chúc mừng!';
     message.innerHTML = `
-        <h3>Bạn đã hoàn thành tất cả 12 ngày lịch sử!</h3>
-        <p>Chiến thắng Điện Biên Phủ đã hoàn thành trong tay bạn.</p>
-        <p>Điểm tổng: ${gameState.totalScore}</p>
-        <p>"Điện Biên Phủ - Lừng lẫy năm châu, chấn động địa cầu!"</p>
+        <h3>Bạn đã hoàn thành tất cả 12 ngày đêm lịch sử!</h3>
+        <p>Chiến thắng "Điện Biên Phủ trên không" đã hoàn thành trong tay bạn.</p>
+        <p>"Hà Nội - Điện Biên Phủ trên không" - 12 ngày đêm anh hùng!</p>
     `;
 
     buttons.innerHTML = `
         <button onclick="goHome()">Về trang chủ</button>
         <button onclick="playAgain()">Chơi lại từ đầu</button>
-        <button onclick="shareScore()">Chia sẻ thành tích</button>
+        <button onclick="shareAchievement()">Chia sẻ thành tích</button>
     `;
 
     overlay.classList.remove('hidden');
 
     // Play victory fanfare
     setTimeout(() => {
-        document.getElementById('victorySound').play().catch(e => { });
+        const victorySound = document.getElementById('victorySound');
+        if (victorySound) {
+            victorySound.play().catch(e => { });
+        }
     }, 500);
 }
 
@@ -239,14 +267,13 @@ function playAgain() {
     gameState.currentLevel = 1;
     gameState.completedLevels = [];
     gameState.unlockedLevels = [1];
-    gameState.totalScore = 0;
     saveGameState();
 
     window.location.href = 'game.html?level=1';
 }
 
-function shareScore() {
-    const text = `Tôi vừa hoàn thành game "Chiến thắng Điện Biên Phủ" với ${gameState.totalScore} điểm! 🏆 #DieBienPhu #LichSu`;
+function shareAchievement() {
+    const text = `Tôi vừa hoàn thành chiến dịch "Điện Biên Phủ trên không" - 12 ngày đêm lịch sử! 🏆 #DieBienPhu #LichSu #Vietnam1972`;
 
     if (navigator.share) {
         navigator.share({
@@ -396,4 +423,78 @@ window.addEventListener('beforeunload', function () {
         game.stop();
         saveGameState();
     }
+});
+
+// Sound toggle functionality
+function toggleSound() {
+    soundEnabled = !soundEnabled;
+
+    const soundToggle = document.getElementById('soundToggle');
+    const soundIcon = document.getElementById('soundIcon');
+    const gameMusic = document.getElementById('gameMusic');
+
+    if (soundEnabled) {
+        soundIcon.textContent = '🔊';
+        soundToggle.classList.remove('muted');
+        soundToggle.title = 'Tắt âm thanh';
+
+        // Resume background music if it was playing
+        if (gameMusic && gameMusic.paused) {
+            gameMusic.play().catch(e => console.log('Cannot play music:', e));
+        }
+    } else {
+        soundIcon.textContent = '🔇';
+        soundToggle.classList.add('muted');
+        soundToggle.title = 'Bật âm thanh';
+
+        // Stop all currently playing audio including background music
+        const audioElements = document.querySelectorAll('audio');
+        audioElements.forEach(audio => {
+            audio.pause();
+            audio.currentTime = 0;
+        });
+    }
+
+    // Update game engine audio state
+    if (game) {
+        game.audioEnabled = soundEnabled;
+    }
+
+    // Save sound preference
+    localStorage.setItem('soundEnabled', soundEnabled);
+}
+
+// Initialize sound toggle state
+function initSoundToggle() {
+    // Load saved sound preference
+    const savedSoundState = localStorage.getItem('soundEnabled');
+    if (savedSoundState !== null) {
+        soundEnabled = JSON.parse(savedSoundState);
+    }
+
+    // Set initial state
+    const soundToggle = document.getElementById('soundToggle');
+    const soundIcon = document.getElementById('soundIcon');
+
+    if (soundToggle && soundIcon) {
+        if (soundEnabled) {
+            soundIcon.textContent = '🔊';
+            soundToggle.classList.remove('muted');
+            soundToggle.title = 'Tắt âm thanh';
+        } else {
+            soundIcon.textContent = '🔇';
+            soundToggle.classList.add('muted');
+            soundToggle.title = 'Bật âm thanh';
+        }
+    }
+
+    // Update game engine audio state
+    if (game) {
+        game.audioEnabled = soundEnabled;
+    }
+}
+
+// Initialize sound toggle when page loads
+document.addEventListener('DOMContentLoaded', function () {
+    setTimeout(initSoundToggle, 100); // Delay to ensure elements are loaded
 });

@@ -1,0 +1,33 @@
+<!-- C-47 Skytrain Aircraft Image -->
+<!-- Replace this placeholder with your actual C-47.png image -->
+<!-- Recommended dimensions: 160x105 pixels (2x width, 3.5x height of collision box) -->
+<!-- Format: PNG with transparency preferred -->
+<!-- The aircraft should be facing right in the image -->
+
+IMPORTANT: Name your C-47 aircraft image file as "C-47.png" and place it in this folder.
+
+Aircraft characteristics in game:
+- Medium size: 80x30 collision box
+- Slow speed: 1.5 (transport aircraft)
+- Low health: 1 hit to destroy
+- Low bombing damage: 5 per bomb
+- Bombing rate: 3000-4000ms (slow, not a primary bomber)
+- RARE SPAWN: Only 1-2 C-47s per level (10% spawn chance)
+- Special feature: Instantly activates power-ups when destroyed
+- Points: 40 when destroyed
+- Color scheme: Brownish-gray transport aircraft
+
+Power-ups activated immediately when C-47 is destroyed (random):
+- ⚡ Rapid Fire: Doubles firing rate for 5 seconds
+- 🛡️ Shield: Reduces damage by 50% for 8 seconds  
+- 🎯 Multi Shot: Fires 3 bullets at once for 6 seconds
+- ❤️ Heal: Restores 30 health points instantly
+- 💥 Spread Shot: Fires 5 bullets in fan pattern for 7 seconds
+
+Game Features:
+- Enhanced notifications show which power-up was activated
+- Power-up effects activate instantly upon C-47 destruction
+- No need to collect dropping items - automatic activation
+- Visual and audio feedback for power-up activation
+
+Historical Note: The C-47 Skytrain was used extensively for transport and supply drops during the Battle of Dien Bien Phu.
