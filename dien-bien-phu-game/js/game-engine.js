@@ -69,22 +69,11 @@ class GameEngine {
     setupResponsiveCanvas() {
         // Get the container dimensions
         const container = this.canvas.parentElement;
+        const containerRect = container.getBoundingClientRect();
 
-        // Mobile-specific detection
-        const isMobile = window.innerWidth <= 768;
-        const isLandscape = window.innerWidth > window.innerHeight;
-
-        // Calculate available space accounting for UI elements
-        let headerHeight = 0;
-        if (isMobile && isLandscape && window.innerHeight <= 500) {
-            // Landscape mobile - header is hidden
-            headerHeight = 0;
-        } else {
-            headerHeight = document.querySelector('.game-header')?.offsetHeight || 60;
-        }
-
+        // Calculate available space (accounting for header and padding)
         const availableWidth = window.innerWidth;
-        const availableHeight = window.innerHeight - headerHeight;
+        const availableHeight = window.innerHeight - 80; // Account for header
 
         // Calculate aspect ratio
         const gameAspectRatio = this.baseWidth / this.baseHeight;
@@ -92,73 +81,35 @@ class GameEngine {
 
         let canvasWidth, canvasHeight;
 
-        if (isMobile) {
-            if (isLandscape) {
-                // Landscape mobile - very conservative sizing to prevent cropping
-                const maxWidth = availableWidth * 0.88;
-                const maxHeight = availableHeight * 0.80; // Very conservative
-
-                // Calculate based on aspect ratio with reasonable limits
-                canvasWidth = Math.min(maxWidth, maxHeight * gameAspectRatio);
-                canvasHeight = canvasWidth / gameAspectRatio;
-
-                // Double-check height constraint
-                if (canvasHeight > maxHeight) {
-                    canvasHeight = maxHeight;
-                    canvasWidth = canvasHeight * gameAspectRatio;
-                }
-            } else {
-                // Portrait mobile - very conservative sizing to prevent bottom cropping
-                const maxWidth = availableWidth * 0.90;
-                const maxHeight = availableHeight * 0.70; // Very conservative for portrait
-
-                // Start with width-based sizing
-                canvasWidth = maxWidth;
-                canvasHeight = canvasWidth / gameAspectRatio;
-
-                // If height exceeds limit, constrain by height instead
-                if (canvasHeight > maxHeight) {
-                    canvasHeight = maxHeight;
-                    canvasWidth = canvasHeight * gameAspectRatio;
-                }
-            }
+        if (screenAspectRatio > gameAspectRatio) {
+            // Screen is wider than game - fit to height
+            canvasHeight = Math.min(availableHeight * 0.9, this.baseHeight);
+            canvasWidth = canvasHeight * gameAspectRatio;
         } else {
-            // Desktop handling (existing logic)
-            if (screenAspectRatio > gameAspectRatio) {
-                canvasHeight = Math.min(availableHeight * 0.9, this.baseHeight);
-                canvasWidth = canvasHeight * gameAspectRatio;
-            } else {
-                canvasWidth = Math.min(availableWidth * 0.95, this.baseWidth);
-                canvasHeight = canvasWidth / gameAspectRatio;
-            }
+            // Screen is taller than game - fit to width
+            canvasWidth = Math.min(availableWidth * 0.95, this.baseWidth);
+            canvasHeight = canvasWidth / gameAspectRatio;
         }
 
-        // Ensure minimum sizes but optimize for mobile
-        const minWidth = isMobile ? 280 : 320;
-        const minHeight = isMobile ? 150 : 180;
+        // Ensure minimum sizes
+        canvasWidth = Math.max(320, canvasWidth);
+        canvasHeight = Math.max(180, canvasHeight);
 
-        canvasWidth = Math.max(minWidth, canvasWidth);
-        canvasHeight = Math.max(minHeight, canvasHeight);
-
-        // Set internal canvas dimensions to base resolution
+        // Set canvas dimensions
         this.canvas.width = this.baseWidth;
         this.canvas.height = this.baseHeight;
 
         // Set CSS dimensions for scaling
-        this.canvas.style.width = Math.floor(canvasWidth) + 'px';
-        this.canvas.style.height = Math.floor(canvasHeight) + 'px';
+        this.canvas.style.width = canvasWidth + 'px';
+        this.canvas.style.height = canvasHeight + 'px';
 
-        // Calculate scaling factors for input
+        // Calculate scaling factors for mouse input
         this.scaleX = this.baseWidth / canvasWidth;
         this.scaleY = this.baseHeight / canvasHeight;
 
         // Update dimensions
         this.width = this.baseWidth;
         this.height = this.baseHeight;
-
-        // Store mobile state for other optimizations
-        this.isMobile = isMobile;
-        this.isLandscape = isLandscape;
     }
 
     handleResize() {
@@ -238,8 +189,16 @@ class GameEngine {
             this.mouse.x = rawX * (this.scaleX || 1);
             this.mouse.y = rawY * (this.scaleY || 1);
 
-            // Update gun angle
-            this.updateGunAngle();
+            // Tính góc từ pháo đến chuột
+            const dx = this.mouse.x - (this.player.x + this.player.width / 2);
+            const dy = this.mouse.y - (this.player.y + this.player.height / 2);
+
+            // Giới hạn góc ngắm (chỉ bắn lên trên)
+            let angle = Math.atan2(dy, dx);
+            if (angle > -Math.PI / 6) angle = -Math.PI / 6; // Không quá 30 độ phải
+            if (angle < -Math.PI + Math.PI / 6) angle = -Math.PI + Math.PI / 6; // Không quá 30 độ trái
+
+            this.player.angle = angle;
         });
 
         this.canvas.addEventListener('click', (e) => {
@@ -251,18 +210,6 @@ class GameEngine {
         // Touch events for mobile devices
         this.canvas.addEventListener('touchstart', (e) => {
             e.preventDefault();
-            const rect = this.canvas.getBoundingClientRect();
-            const touch = e.touches[0];
-
-            // Calculate touch position with scaling
-            const rawX = touch.clientX - rect.left;
-            const rawY = touch.clientY - rect.top;
-            this.mouse.x = rawX * (this.scaleX || 1);
-            this.mouse.y = rawY * (this.scaleY || 1);
-
-            // Update gun angle immediately
-            this.updateGunAngle();
-
             if (!this.isPaused && this.isRunning) {
                 this.shoot();
             }
@@ -273,28 +220,24 @@ class GameEngine {
             const rect = this.canvas.getBoundingClientRect();
             const touch = e.touches[0];
 
-            // Calculate touch position with scaling
+            // Account for scaling when calculating touch position
             const rawX = touch.clientX - rect.left;
             const rawY = touch.clientY - rect.top;
+
+            // Scale touch coordinates to match game coordinates
             this.mouse.x = rawX * (this.scaleX || 1);
             this.mouse.y = rawY * (this.scaleY || 1);
 
-            // Update gun angle for aiming
-            this.updateGunAngle();
-        });
+            // Tính góc từ pháo đến touch
+            const dx = this.mouse.x - (this.player.x + this.player.width / 2);
+            const dy = this.mouse.y - (this.player.y + this.player.height / 2);
 
-        this.canvas.addEventListener('touchend', (e) => {
-            e.preventDefault();
-        });
+            // Giới hạn góc ngắm (chỉ bắn lên trên)
+            let angle = Math.atan2(dy, dx);
+            if (angle > -Math.PI / 6) angle = -Math.PI / 6; // Không quá 30 độ phải
+            if (angle < -Math.PI + Math.PI / 6) angle = -Math.PI + Math.PI / 6; // Không quá 30 độ trái
 
-        // Prevent context menu on long press
-        this.canvas.addEventListener('contextmenu', (e) => {
-            e.preventDefault();
-        });
-
-        // Prevent scrolling when touching the canvas
-        this.canvas.addEventListener('touchforcechange', (e) => {
-            e.preventDefault();
+            this.player.angle = angle;
         });
 
         // Keyboard events
@@ -318,23 +261,6 @@ class GameEngine {
                 this.handleResize();
             }, 100);
         });
-    }
-
-    updateGunAngle() {
-        if (!this.player) return;
-
-        // Calculate angle from gun to mouse/touch position
-        const dx = this.mouse.x - (this.player.x + this.player.width / 2);
-        const dy = this.mouse.y - (this.player.y + this.player.height / 2);
-
-        // Calculate angle and apply constraints (gun can only aim upward)
-        let angle = Math.atan2(dy, dx);
-
-        // Limit aiming angle (only shoot upward)
-        if (angle > -Math.PI / 6) angle = -Math.PI / 6; // Not more than 30 degrees right
-        if (angle < -Math.PI + Math.PI / 6) angle = -Math.PI + Math.PI / 6; // Not more than 30 degrees left
-
-        this.player.angle = angle;
     }
 
     reset() {

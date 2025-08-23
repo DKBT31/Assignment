@@ -46,8 +46,6 @@ function showLoadingScreen() {
     `;
 
     document.body.appendChild(loadingScreen);
-    // Add body class to hide mobile controls
-    document.body.classList.add('loading-active');
 
     // Animate loading bar
     let progress = 0;
@@ -66,8 +64,6 @@ function hideLoadingScreen() {
     const loadingScreen = document.getElementById('loadingScreen');
     if (loadingScreen) {
         loadingScreen.classList.add('hidden');
-        // Remove body class to show mobile controls
-        document.body.classList.remove('loading-active');
         setTimeout(() => {
             loadingScreen.remove();
         }, 500);
@@ -201,16 +197,12 @@ function showOverlay(title, message) {
     overlayTitle.textContent = title;
     overlayMessage.textContent = message;
     overlay.classList.remove('hidden');
-    // Add body class to hide mobile controls
-    document.body.classList.add('overlay-active');
 }
 
 // Hide overlay
 function hideOverlay() {
     const overlay = document.getElementById('gameOverlay');
     overlay.classList.add('hidden');
-    // Remove body class to show mobile controls
-    document.body.classList.remove('overlay-active');
 }
 
 // Toggle history panel
@@ -437,18 +429,23 @@ window.addEventListener('beforeunload', function () {
 function toggleSound() {
     soundEnabled = !soundEnabled;
 
-    const mobileSoundIcon = document.getElementById('mobileSoundIcon');
+    const soundToggle = document.getElementById('soundToggle');
+    const soundIcon = document.getElementById('soundIcon');
     const gameMusic = document.getElementById('gameMusic');
 
     if (soundEnabled) {
-        if (mobileSoundIcon) mobileSoundIcon.textContent = '🔊';
+        soundIcon.textContent = '🔊';
+        soundToggle.classList.remove('muted');
+        soundToggle.title = 'Tắt âm thanh';
 
         // Resume background music if it was playing
         if (gameMusic && gameMusic.paused) {
             gameMusic.play().catch(e => console.log('Cannot play music:', e));
         }
     } else {
-        if (mobileSoundIcon) mobileSoundIcon.textContent = '🔇';
+        soundIcon.textContent = '🔇';
+        soundToggle.classList.add('muted');
+        soundToggle.title = 'Bật âm thanh';
 
         // Stop all currently playing audio including background music
         const audioElements = document.querySelectorAll('audio');
@@ -475,14 +472,19 @@ function initSoundToggle() {
         soundEnabled = JSON.parse(savedSoundState);
     }
 
-    // Set initial state for mobile sound icon
-    const mobileSoundIcon = document.getElementById('mobileSoundIcon');
+    // Set initial state
+    const soundToggle = document.getElementById('soundToggle');
+    const soundIcon = document.getElementById('soundIcon');
 
-    if (mobileSoundIcon) {
+    if (soundToggle && soundIcon) {
         if (soundEnabled) {
-            mobileSoundIcon.textContent = '🔊';
+            soundIcon.textContent = '🔊';
+            soundToggle.classList.remove('muted');
+            soundToggle.title = 'Tắt âm thanh';
         } else {
-            mobileSoundIcon.textContent = '🔇';
+            soundIcon.textContent = '🔇';
+            soundToggle.classList.add('muted');
+            soundToggle.title = 'Bật âm thanh';
         }
     }
 

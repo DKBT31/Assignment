@@ -1,7 +1,6 @@
 /* Detail Page Styles */
 /* Ensure full background coverage */
-html,
-body {
+html, body {
     margin: 0;
     padding: 0;
     background: linear-gradient(135deg, #1a4b2e, #2d5016);
@@ -21,7 +20,7 @@ body {
         background-attachment: scroll;
         padding-bottom: 20px;
     }
-
+    
     /* Ensure body and html have consistent background */
     body {
         background: linear-gradient(135deg, #1a4b2e, #2d5016);
