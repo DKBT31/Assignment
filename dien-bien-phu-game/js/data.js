@@ -278,7 +278,7 @@ function saveGameState() {
 function getBasePath() {
     const currentPath = window.location.pathname;
     const hostname = window.location.hostname;
-    
+
     // For Vercel production, we need to check where we are
     if (!hostname.includes('localhost') && !hostname.includes('127.0.0.1')) {
         // If we're at the root (index page) on Vercel, we still need the dien-bien-phu-game prefix
@@ -289,13 +289,13 @@ function getBasePath() {
         // If we're already in a game page, no prefix needed
         return '';
     }
-    
+
     // For local development
     // If we're already in the dien-bien-phu-game folder
     if (currentPath.includes('/dien-bien-phu-game/')) {
         return ''; // Already in subfolder, no prefix needed
     }
-    
+
     // If we're on the root or index page in local development, we need the prefix
     return 'dien-bien-phu-game/';
 }
