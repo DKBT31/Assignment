@@ -274,5 +274,18 @@ function saveGameState() {
     localStorage.setItem('dienBienPhuGameState', JSON.stringify(gameState));
 }
 
+// Helper functions for environment-aware navigation
+function getBasePath() {
+    // Detect environment based on hostname
+    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+        return 'dien-bien-phu-game/';
+    }
+    return ''; // Production environment (Vercel)
+}
+
+function buildPath(relativePath) {
+    return getBasePath() + relativePath;
+}
+
 // Khởi tạo
 loadGameState();

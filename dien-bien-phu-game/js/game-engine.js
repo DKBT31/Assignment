@@ -1158,7 +1158,7 @@ class GameEngine {
 
     viewDayDetail() {
         // Navigate to the detail page for the current day
-        window.location.href = `dien-bien-phu-game/details/day${this.currentLevel}.html`;
+        window.location.href = buildPath(`details/day${this.currentLevel}.html`);
     }
 
     showGameOver(reason) {
