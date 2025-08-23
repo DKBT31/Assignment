@@ -159,7 +159,6 @@ class GameEngine {
         // Initialize game first, then load images in background
         this.setupPlayer();
         this.setupEventListeners();
-        this.setupMobileControls();
         this.loadLevel(this.currentLevel);
 
         // Load images asynchronously without blocking game start
@@ -322,56 +321,6 @@ class GameEngine {
         if (angle < -Math.PI + Math.PI / 6) angle = -Math.PI + Math.PI / 6; // Not more than 30 degrees left
 
         this.player.angle = angle;
-    }
-
-    setupMobileControls() {
-        const touchFireBtn = document.getElementById('touchFireBtn');
-        const gameControls = document.querySelector('.game-controls');
-        const mobileInstructions = document.querySelector('.mobile-instructions');
-        
-        // Check if device is mobile
-        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) 
-                       || window.innerWidth <= 768;
-        
-        if (isMobile) {
-            // Show mobile controls
-            if (gameControls) gameControls.style.display = 'flex';
-            if (mobileInstructions) mobileInstructions.style.display = 'block';
-            
-            // Add touch fire button event
-            if (touchFireBtn) {
-                touchFireBtn.addEventListener('touchstart', (e) => {
-                    e.preventDefault();
-                    if (!this.isPaused && this.isRunning) {
-                        this.shoot();
-                    }
-                });
-                
-                touchFireBtn.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    if (!this.isPaused && this.isRunning) {
-                        this.shoot();
-                    }
-                });
-            }
-        } else {
-            // Hide mobile controls on desktop
-            if (gameControls) gameControls.style.display = 'none';
-            if (mobileInstructions) mobileInstructions.style.display = 'none';
-        }
-
-        // Update controls visibility on resize
-        window.addEventListener('resize', () => {
-            const isMobileNow = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) 
-                             || window.innerWidth <= 768;
-            
-            if (gameControls) {
-                gameControls.style.display = isMobileNow ? 'flex' : 'none';
-            }
-            if (mobileInstructions) {
-                mobileInstructions.style.display = isMobileNow ? 'block' : 'none';
-            }
-        });
     }
 
     reset() {
