@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ngày 3 - Chi Tiết | Điện Biên Phủ Trên Không</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/detail.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="detail-container">
+        <!-- Music Control Button -->
+        <div class="music-control">
+            <button id="musicToggle" class="music-btn" onclick="toggleMusic()">
+                🔊
+            </button>
+        </div>
+        
+        <header class="detail-header">
+            <div class="container">
+                <div class="back-navigation">
+                    <button onclick="goBack()" class="back-btn">← Quay lại</button>
+                    <button onclick="goHome()" class="home-btn">🏠 Trang chủ</button>
+                </div>
+                <h1 class="detail-title">Ngày 3 - 20/12/1972</h1>
+                <h2 class="detail-subtitle">B-52 rơi nhiều nhất trong 1 ngày</h2>
+            </div>
+        </header>
+
+        <main class="detail-content">
+            <div class="container">
+                <div class="content-grid">
+                    <div class="main-content">
+                        <!-- Diễn biến chính -->
+                        <div class="content-section">
+                            <h3>📋 Diễn biến</h3>
+                            <div class="timeline-event">
+                                <div class="event-time">Tối 20/12/1972</div>
+                                <div class="event-description">
+                                    <p>Mỹ huy động <strong>93 B-52</strong> cùng hàng trăm máy bay chiến thuật. Tối 20/12, trận đánh lớn nhất từ đầu chiến dịch nổ ra.</p>
+                                    <p>Các đơn vị tên lửa <strong>261, 257, 274</strong> phối hợp nhịp nhàng. <strong>Kết quả:</strong> bắn rơi 7 B-52 trong 24 giờ, trong đó 4 chiếc rơi tại chỗ ở ngoại thành Hà Nội.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tổn thất -->
+                        <div class="content-section">
+                            <h3>💥 Tổn thất Mỹ</h3>
+                            <div class="casualties-grid">
+                                <div class="casualty-item">
+                                    <div class="casualty-number">7</div>
+                                    <div class="casualty-type">B-52</div>
+                                </div>
+                                <div class="casualty-item">
+                                    <div class="casualty-number">5</div>
+                                    <div class="casualty-type">Máy bay chiến thuật</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Ý nghĩa lịch sử -->
+                        <div class="content-section">
+                            <h3>⭐ Ý nghĩa lịch sử</h3>
+                            <div class="significance-content">
+                                <p>Ngày 20/12 là <strong>"ngày đen tối nhất"</strong> của không quân Mỹ, khi 7 pháo đài bay B-52 bị hạ, khiến Washington choáng váng.</p>
+                                <p class="highlight-text">Đây cũng là ngày củng cố quyết tâm: B-52 hoàn toàn có thể bị đánh bại.</p>
+                            </div>
+                        </div>
+
+                        <!-- Các sự kiện chính -->
+                        <div class="content-section">
+                            <h3>🎯 Sự kiện chính</h3>
+                            <div class="events-timeline">
+                                <div class="timeline-item-detail">
+                                    <div class="timeline-marker"></div>
+                                    <div class="timeline-content-detail">
+                                        Mỹ ném bom vào <strong>ga Yên Viên, kho xăng Đức Giang, cầu Long Biên</strong>.
+                                    </div>
+                                </div>
+                                <div class="timeline-item-detail">
+                                    <div class="timeline-marker"></div>
+                                    <div class="timeline-content-detail">
+                                        Bộ đội tên lửa bắn rơi <strong>7 B-52, 5 máy bay chiến thuật</strong>.
+                                    </div>
+                                </div>
+                                <div class="timeline-item-detail">
+                                    <div class="timeline-marker"></div>
+                                    <div class="timeline-content-detail">
+                                        Hà Nội trở thành <strong>"chiến trường quyết liệt nhất hành tinh"</strong>.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Info sidebar -->
+                    <div class="sidebar">
+                        <div class="info-box">
+                            <h4>📊 Thống kê</h4>
+                            <div class="stat-item">
+                                <span class="stat-label">B-52 tấn công:</span>
+                                <span class="stat-value">93</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">B-52 bị hạ:</span>
+                                <span class="stat-value">7</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Rơi tại chỗ:</span>
+                                <span class="stat-value">4/7</span>
+                            </div>
+                        </div>
+
+                        <div class="stats-box">
+                            <h4>🎖️ Đơn vị lập công</h4>
+                            <div class="stat-item">
+                                <span class="stat-label">Trung đoàn:</span>
+                                <span class="stat-value">261, 257, 274</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Vũ khí:</span>
+                                <span class="stat-value">Tên lửa S-75</span>
+                            </div>
+                        </div>
+
+                        <div class="navigation-box">
+                            <h4>🧭 Điều hướng</h4>
+                            <button onclick="playDay(3)" class="play-btn">🎮 Chơi ngày này</button>
+                            <button onclick="viewDay(2)" class="prev-btn">⬅️ Ngày trước</button>
+                            <button onclick="viewDay(4)" class="next-btn">➡️ Ngày tiếp theo</button>
+                            <button onclick="viewAllDays()" class="overview-btn">📋 Xem tất cả</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <audio id="backgroundMusic" loop>
+        <source src="../assets/audio/dien-bien-phu-theme.mp3" type="audio/mpeg">
+    </audio>
+
+    <script src="../js/global-music.js"></script>
+    <script src="../js/data.js"></script>
+    <script src="../js/detail.js"></script>
+    
+    <!-- Chỉ giữ lại toggleMusic function để tương thích -->
+    <script>
+        // Legacy function để tương thích  
+        function toggleMusic() {
+            if (window.globalMusic) {
+                window.globalMusic.toggle();
+            }
+        }
+    </script>
+</body>
+
+</html>

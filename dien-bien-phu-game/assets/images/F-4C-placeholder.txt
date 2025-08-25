@@ -1,0 +1,16 @@
+<!-- F-4C Phantom II Aircraft Image Placeholder -->
+<!-- This is where you should place your F-4C aircraft image -->
+<!-- Recommended dimensions: 176x120 pixels (2.2x width, 4x height of collision box) -->
+<!-- Format: PNG with transparency preferred -->
+<!-- The aircraft should be facing right in the image -->
+
+This placeholder file should be replaced with your actual F-4C Phantom II aircraft image.
+The game will automatically flip the image when the aircraft flies from right to left.
+
+Aircraft characteristics in game:
+- Smaller size: 80x30 collision box (vs normal 120x45)
+- Higher speed: 4.5 (vs normal 1.5-3.5)
+- Much higher bombing rate: 400-1000ms (vs normal 2000-5000ms)
+- Very low health: 1 hit to destroy (glass cannon)
+- Lower bomb damage: 15 (vs normal 25)
+- Higher points: 60 when destroyed

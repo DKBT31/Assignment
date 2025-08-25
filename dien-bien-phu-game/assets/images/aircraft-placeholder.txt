@@ -1,0 +1,19 @@
+<!-- B-52 Stratofortress Aircraft Image Placeholder -->
+<!-- This is where you should place your B-52 aircraft image -->
+<!-- Recommended dimensions: 240x225 pixels (2x width, 5x height of collision box) -->
+<!-- Format: PNG with transparency preferred -->
+<!-- The aircraft should be facing right in the image -->
+
+This placeholder file should be replaced with your actual B-52 Stratofortress aircraft image.
+The game will automatically flip the image when the aircraft flies from right to left.
+
+Aircraft characteristics in game:
+- Size: 120x45 collision box (normal size)
+- Speed: 2 (slower heavy bomber)
+- Health: 2 hits to destroy
+- Bombing Pattern: Carpet bombing - drops 5 bombs in rapid succession (200ms apart)
+- Bomb Trajectory: Angled drops with forward momentum (80% of aircraft speed)
+- Burst Delay: 4000-6000ms between bombing runs
+- Bomb Damage: 5 per bomb (25 total per burst)
+- Physics: Realistic gravity and ballistic trajectory
+- Points: 75 when destroyed

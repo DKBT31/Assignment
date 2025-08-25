@@ -1,0 +1,14 @@
+# ĐÂY LÀ FILE PLACEHOLDER CHO NHẠC NỀN
+# File: dien-bien-phu-theme.mp3
+# 
+# Để test hệ thống nhạc toàn cục, bạn cần:
+# 1. Tải một file nhạc MP3 phù hợp
+# 2. Đổi tên thành "dien-bien-phu-theme.mp3"  
+# 3. Đặt vào thư mục này
+#
+# Gợi ý nhạc phù hợp:
+# - Nhạc từ phim "Điện Biên Phủ" (1992)
+# - "Tiến quân ca" instrumental
+# - Nhạc nền lịch sử, military theme
+#
+# Định dạng: MP3, 128-320kbps, 3-5 phút, loop được

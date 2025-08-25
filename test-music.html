@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Music System</title>
+    <link rel="stylesheet" href="dien-bien-phu-game/css/style.css">
+</head>
+<body style="padding: 20px; background: #1a472a;">
+    <div class="music-control">
+        <button id="musicToggle" class="music-btn" onclick="toggleMusic()">
+            🔊
+        </button>
+    </div>
+    
+    <h1 style="color: white; margin-top: 80px;">Test Music System</h1>
+    
+    <div style="color: white; margin: 20px 0;">
+        <h3>Các Test Cases:</h3>
+        <ol>
+            <li><strong>Test Auto-start:</strong> Reload trang này - nhạc nên tự động bật</li>
+            <li><strong>Test Cross-page:</strong> Chuyển sang <a href="index.html" style="color: #FFD700;">trang chủ</a> - nhạc nên tiếp tục</li>
+            <li><strong>Test Resume:</strong> Pause nhạc, chuyển trang, quay lại - nhạc nên tiếp tục từ vị trí cũ</li>
+        </ol>
+    </div>
+    
+    <div style="color: white; margin: 20px 0;">
+        <h3>Debug Info:</h3>
+        <div id="debugInfo"></div>
+        <button onclick="showDebugInfo()" style="padding: 10px; margin: 10px 0;">Refresh Debug Info</button>
+        <button onclick="clearStorage()" style="padding: 10px; margin: 10px 0;">Clear Storage</button>
+    </div>
+    
+    <script src="dien-bien-phu-game/js/global-music.js"></script>
+    <script>
+        function toggleMusic() {
+            if (window.globalMusic) {
+                window.globalMusic.toggle();
+            }
+        }
+        
+        function showDebugInfo() {
+            setTimeout(() => {
+                const info = document.getElementById('debugInfo');
+                if (window.globalMusic) {
+                    info.innerHTML = `
+                        <p>Is Playing: ${window.globalMusic.isPlaying}</p>
+                        <p>Current Time: ${window.globalMusic.currentTime.toFixed(2)}s</p>
+                        <p>Has User Interacted: ${window.globalMusic.hasUserInteracted}</p>
+                        <p>Audio Ready State: ${window.globalMusic.audio ? window.globalMusic.audio.readyState : 'No audio'}</p>
+                        <p>Audio Paused: ${window.globalMusic.audio ? window.globalMusic.audio.paused : 'No audio'}</p>
+                        <p>Music URL: ${window.globalMusic.musicUrl}</p>
+                    `;
+                } else {
+                    info.innerHTML = '<p>Global music not loaded yet</p>';
+                }
+            }, 100);
+        }
+        
+        function clearStorage() {
+            Object.keys(localStorage).forEach(key => {
+                if (key.startsWith('globalMusic_')) {
+                    localStorage.removeItem(key);
+                }
+            });
+            location.reload();
+        }
+        
+        // Show debug info when page loads
+        setTimeout(showDebugInfo, 1000);
+        
+        // Update debug info every 2 seconds
+        setInterval(showDebugInfo, 2000);
+    </script>
+</body>
+</html>
