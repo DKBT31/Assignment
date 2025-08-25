@@ -13,15 +13,7 @@
 </head>
 
 <body>
-    <div class="detail-container">
-        <!-- Music Control Button -->
-        <div class="music-control">
-            <button id="musicToggle" class="music-btn" onclick="toggleMusic()">
-                
-            </button>
-        </div>
-        
-        <header class="detail-header">
+    <div class="detail-container"><header class="detail-header">
             <div class="container">
                 <div class="back-navigation">
                     <button onclick="goBack()" class="back-btn">← Quay lại</button>
@@ -293,58 +285,13 @@
                 </div>
             </div>
         </main>
-    </div>
-    <audio id="backgroundMusic" loop>
-        <source src="../assets/audio/dien-bien-phu-theme.mp3" type="audio/mpeg">
-    </audio>
+    </div><script src="../js/data.js"></script>
+    <script src="../js/detail.js"></script></body>
 
-
-
-    <script src="../js/global-music.js"></script>
-    <script src="../js/data.js"></script>
-    <script src="../js/detail.js"></script>
-    
-    <!-- Chỉ giữ lại toggleMusic function để tương thích -->
-    <script>
-        // Legacy function để tương thích  
-        function toggleMusic() {
-            if (window.globalMusic) {
-                window.globalMusic.toggle();
-            }
-        }
-    </script>
-</body>
-
-</html>
-
-        function toggleMusic() {
-            if (musicPlaying) {
-                backgroundMusic.pause();
-                musicToggle.textContent = '';
-                musicToggle.classList.add('muted');
-                musicPlaying = false;
-            } else {
-                backgroundMusic.play().catch(e => {
-                    console.log('Không thể phát nhạc:', e);
-                });
-                musicToggle.textContent = '';
-                musicToggle.classList.remove('muted');
-                musicPlaying = true;
-            }
-        }
-
-        // Set volume
-        backgroundMusic.volume = 0.3;
-        
-        // Auto play music when page loads
-        window.addEventListener('load', function() {
+</html>else {});}
+        }window.addEventListener('load', function() {
             // Try to autoplay after a short delay
-            setTimeout(() => {
-                backgroundMusic.play().then(() => {
-                    musicToggle.textContent = '';
-                    musicToggle.classList.remove('muted');
-                    musicPlaying = true;
-                }).catch(e => {
+            setTimeout(() => {}).catch(e => {
                     console.log('Autoplay blocked by browser. User needs to interact first.');
                     // Keep the muted state for user to manually start
                 });
@@ -352,3 +299,5 @@
         });
     </script>
 </body>
+
+

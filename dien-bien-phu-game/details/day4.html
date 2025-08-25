@@ -13,15 +13,7 @@
 </head>
 
 <body>
-    <div class="detail-container">
-        <!-- Music Control Button -->
-        <div class="music-control">
-            <button id="musicToggle" class="music-btn" onclick="toggleMusic()">
-                🔊
-            </button>
-        </div>
-        
-        <header class="detail-header">
+    <div class="detail-container"><header class="detail-header">
             <div class="container">
                 <div class="back-navigation">
                     <button onclick="goBack()" class="back-btn">← Quay lại</button>
@@ -128,26 +120,10 @@
                 </div>
             </div>
         </main>
-    </div>
-
-    <audio id="backgroundMusic" loop>
-        <source src="../assets/audio/dien-bien-phu-theme.mp3" type="audio/mpeg">
-    </audio>
-
-    <script src="../js/global-music.js"></script>
-    <script src="../js/data.js"></script>
-    <script src="../js/detail.js"></script>
-    
-    <!-- Chỉ giữ lại toggleMusic function để tương thích -->
-    <script>
-        // Legacy function để tương thích  
-        function toggleMusic() {
-            if (window.globalMusic) {
-                window.globalMusic.toggle();
-            }
-        }
-    </script>
-</body>
+    </div><script src="../js/data.js"></script>
+    <script src="../js/detail.js"></script></body>
 
 </html>
+
+
 
