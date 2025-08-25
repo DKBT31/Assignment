@@ -299,7 +299,7 @@ body {
         align-items: flex-start;
         overflow-y: auto;
     }
-    
+
     .overlay-content {
         padding: 15px;
         margin: 5px auto;
@@ -353,21 +353,21 @@ body {
         font-size: 1.2rem;
         margin: 0;
     }
-    
+
     /* Ensure historical completion content is also mobile-friendly */
     .historical-completion {
         font-size: 0.85rem;
     }
-    
+
     .historical-completion h2 {
         font-size: 1.8rem;
         margin-bottom: 8px;
     }
-    
+
     .historical-completion .content-grid {
         gap: 4px;
     }
-    
+
     .stat-item .stat-label,
     .stat-item .stat-value {
         font-size: 1.1rem;
@@ -438,7 +438,7 @@ body {
     .overlay {
         padding: 5px;
     }
-    
+
     .overlay-content {
         padding: 10px;
         margin: 0;
@@ -446,38 +446,38 @@ body {
         max-height: calc(100vh - 10px);
         border-radius: 15px;
     }
-    
+
     .overlay-content h2 {
         font-size: 1.8rem;
         margin-bottom: 8px;
     }
-    
+
     .completion-congrats {
         font-size: 1.2rem !important;
     }
-    
+
     .stat-item {
         font-size: 1rem;
         padding: 6px 10px;
     }
-    
+
     .stat-value {
         font-size: 1.2rem;
     }
-    
+
     .completion-next {
         font-size: 1.1rem !important;
     }
-    
+
     .overlay-buttons button {
         padding: 10px 15px;
         font-size: 1rem;
     }
-    
+
     .historical-completion h2 {
         font-size: 1.5rem;
     }
-    
+
     .historical-completion {
         font-size: 0.75rem;
     }
